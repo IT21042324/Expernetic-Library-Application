@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\development\\expernetic library application\\backend\\libraryapp\\migrations\\20250614192715_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\migrations\\20250614192715_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250614192715_initial.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "RelativeToolTip": "LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T19:27:15.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20250614171454_intialData.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "RelativeDocumentMoniker": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "RelativeToolTip": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T17:14:54.811Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20250614171606_intialData.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "RelativeDocumentMoniker": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "RelativeToolTip": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T17:16:06.321Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
