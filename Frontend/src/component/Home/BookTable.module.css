@@ -1,0 +1,17 @@
+.expandedRowContent {
+    padding: 0;
+    margin: 0;
+}
+
+.expandedRowContent p strong {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.expandedRowContent p {
+    margin: 0;
+    padding: 0;
+}
