@@ -15,10 +15,13 @@ export const FetchAllBooksAsync = async (): Promise<Book[]> => {
 
 export const AddBookAsync = async (bookDto: BookPost): Promise<Book> => {
   try {
+    console.log("bookDto", bookDto);
     const { data } = await axios.post(
       "https://localhost:7137/api/books",
       bookDto
     );
+
+    console.log("Added book:", data);
     return data;
   } catch (error) {
     console.error("Error adding book:", error);

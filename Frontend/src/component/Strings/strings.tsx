@@ -35,6 +35,13 @@ export const BookDeletedAlertProps = {
   isVisible: true,
 } as AlertProps;
 
+export const BookCannotBeSavedAlertProps = {
+  severity: "error",
+  message: "Failed to make changes. Please try again.",
+  color: "error",
+  isVisible: true,
+} as AlertProps;
+
 export const BookNotFoundAlertProps = {
   severity: "error",
   message: "Error deleting book. Please try again.",

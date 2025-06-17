@@ -2,10 +2,7 @@
     position: relative;
 }
 
-.expandedRowContent {
-    padding: 0;
-    margin: 0;
-}
+.expandedRowContent {}
 
 .expandedRowContent p strong {
     display: inline-block;
@@ -18,4 +15,9 @@
 .expandedRowContent p {
     margin: 0;
     padding: 0;
+}
+
+.noContent {
+    color: #999;
+    font-style: italic;
 }
