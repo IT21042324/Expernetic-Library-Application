@@ -37,10 +37,8 @@ export type EditableCellProps = {
   onChange?: (id: number, key: BookField, value: BookFieldType) => void;
   onEdit?: (id: number) => void;
 };
-
 export type ActionCellProps = {
   rowData?: Book;
-  dataKey: BookField;
   onEdit: (id: number) => void;
   onRemove: (id: number) => void;
   style?: React.CSSProperties;
@@ -84,4 +82,10 @@ export type AlertProps = {
   message: string;
   color: "success" | "info" | "warning" | "error";
   isVisible: boolean;
+};
+
+export type ExpandCellProps = {
+  rowData?: Book;
+  expandedRowKeys: number[];
+  onChange: (rowData: Book) => void;
 };

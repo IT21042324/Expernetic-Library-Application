@@ -1,35 +1,24 @@
-import MoreIcon from "@rsuite/icons/More";
 import ExpandOutlineIcon from "@rsuite/icons/ExpandOutline";
+import MoreIcon from "@rsuite/icons/More";
+import React from "react";
 import { IconButton, Table } from "rsuite";
-import type { Book, BookFieldType } from "../../lib/type";
-
-type ExpandCellProps = {
-  rowData?: Book;
-  rowKey?: "id";
-  dataKey: keyof Book;
-  expandedRowKeys: BookFieldType[];
-  onChange: (rowData: Book) => void;
-};
+import type { ExpandCellProps } from "../../lib/type";
 
 const { Cell } = Table;
 
-export const ExpandCell = ({
+export const ExpandCell: React.FC<ExpandCellProps> = ({
   rowData,
-  rowKey,
-  dataKey,
   expandedRowKeys,
   onChange,
   ...props
-}: ExpandCellProps) => (
+}) => (
   <Cell {...props} style={{ padding: 5 }}>
     {rowData && (
       <IconButton
         appearance="subtle"
-        onClick={() => {
-          onChange(rowData);
-        }}
+        onClick={() => onChange(rowData)}
         icon={
-          expandedRowKeys.some((key) => key == [rowKey]) ? (
+          expandedRowKeys.includes(rowData.id) ? (
             <MoreIcon />
           ) : (
             <ExpandOutlineIcon />

@@ -1,6 +1,8 @@
-import { VscEdit, VscRemove, VscSave } from "react-icons/vsc";
+// src/components/BookTable/ActionCell.tsx
+import React from "react";
 import { IconButton, Table } from "rsuite";
-import type { ActionCellProps, BookPost, Book } from "../../lib/type";
+import { VscEdit, VscRemove, VscSave } from "react-icons/vsc";
+import type { ActionCellProps, Book, BookPost } from "../../lib/type";
 import {
   AddBookAsync,
   DeleteBookAsync,
@@ -15,86 +17,76 @@ import {
   ErrorSavingBookAlertProps,
 } from "../Strings/strings";
 
-export const ActionCell = ({
+export const ActionCell: React.FC<ActionCellProps> = ({
   rowData,
-  dataKey,
   onEdit,
   onRemove,
-  style,
   bookDataFromLocalState,
   setBookDataFromLocalState,
   setAlertProps,
   ...props
-}: ActionCellProps) => {
+}) => {
   const { Cell } = Table;
   const { books, dispatch } = UseBookContext();
 
-  const onSave = async (bookId: number) => {
-    const bookWithChanges = books.find((book) => book.id === bookId);
-
-    const { id, createdAt, updatedAt, ...bookToPost } = bookWithChanges as Book;
-
-    let data: Book;
+  const onSave = async (tempId: number) => {
+    const book = books.find((b) => b.id === tempId)!;
+    const { id: _, status, createdAt, updatedAt, ...payload } = book as Book;
 
     try {
-      if (rowData && rowData?.id >= 0) {
-        data = await UpdateBookAsync(id, bookToPost as BookPost);
-        if (data) setAlertProps(BookUpdatedAlertProps);
+      let saved: Book;
+      if (tempId < 0) {
+        saved = await AddBookAsync(payload as BookPost);
+        dispatch({ type: "AddBook", payload: saved });
+        setAlertProps({ ...BookAddedAlertProps });
       } else {
-        data = await AddBookAsync(bookToPost as BookPost);
-        if (data) setAlertProps(BookAddedAlertProps);
+        saved = await UpdateBookAsync(tempId, payload as BookPost);
+        dispatch({ type: "EditBook", payload: { ...saved, status: null } });
+        setAlertProps({ ...BookUpdatedAlertProps });
       }
 
-      data !== undefined &&
-        bookWithChanges !== undefined &&
-        dispatch({
-          type: "EditBook",
-          payload: {
-            ...data,
-            status: null,
-          },
-        });
-
-      setBookDataFromLocalState(books as Book[]);
-    } catch (err) {
-      console.error("Error saving book:", err);
-      setAlertProps(ErrorSavingBookAlertProps);
+      setBookDataFromLocalState((prev) =>
+        prev.map((r) => (r.id === tempId ? { ...saved, status: null } : r))
+      );
+    } catch {
+      setAlertProps(
+        tempId < 0
+          ? { ...ErrorSavingBookAlertProps }
+          : { ...BookNotFoundAlertProps }
+      );
     }
   };
 
   const onDelete = async (id: number) => {
+    if (id < 0) {
+      dispatch({ type: "DeleteBook", payload: { id } });
+      setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
+      onRemove(id);
+      setAlertProps({ ...BookDeletedAlertProps });
+      return;
+    }
     try {
-      const data = await DeleteBookAsync(id);
-
-      if (data !== undefined) {
-        dispatch({
-          type: "DeleteBook",
-          payload: { id },
-        });
-        setBookDataFromLocalState(books as Book[]);
-        onRemove(id);
-        setAlertProps(BookDeletedAlertProps);
-      }
-    } catch (error) {
-      console.error("Error deleting book:", error);
-      setAlertProps(BookNotFoundAlertProps);
+      await DeleteBookAsync(id);
+      dispatch({ type: "DeleteBook", payload: { id } });
+      setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
+      onRemove(id);
+      setAlertProps({ ...BookDeletedAlertProps });
+    } catch {
+      setAlertProps({ ...BookNotFoundAlertProps });
     }
   };
 
   return (
-    <Cell
-      {...props}
-      style={{ padding: "6px", display: "flex", gap: "4px", ...style }}
-    >
+    <Cell {...props} style={{ padding: 6, display: "flex", gap: 4 }}>
       {rowData?.id != null && (
         <>
           <IconButton
             appearance="subtle"
             icon={rowData.status === "EDIT" ? <VscSave /> : <VscEdit />}
-            onClick={() => {
+            onClick={async () => {
               if (rowData.status === "EDIT") {
-                onSave(rowData.id);
-                onEdit(rowData.id);
+                await onSave(rowData.id);
+                // no onEdit after save
               } else {
                 onEdit(rowData.id);
               }

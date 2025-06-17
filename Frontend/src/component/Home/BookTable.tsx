@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// src/components/BookTable/BookTable.tsx
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Table } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import type {
@@ -36,7 +37,7 @@ const inlineStyles = `
 }
 `;
 
-export const BookTable = () => {
+export const BookTable: React.FC = () => {
   const [data, setData] = useState<Book[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
@@ -55,153 +56,142 @@ export const BookTable = () => {
         ...book,
         status: selectedRowKeys.includes(book.id) ? "EDIT" : null,
       }));
-      setData(initialData);
-      setAlertProps(BooksFetchedAlertProps);
+      setData(initialData as Book[]);
+      setAlertProps({ ...BooksFetchedAlertProps });
     }
   }, [books]);
 
   const handleChange = (id: number, key: BookField, value: BookFieldType) => {
     const bookToUpdate = books.find((b) => b.id === id);
-    if (!bookToUpdate) {
-      dispatch({ type: "AddBook", payload: { id } });
-    }
-    if (bookToUpdate !== undefined) {
+    if (!bookToUpdate) dispatch({ type: "AddBook", payload: { id } });
+    if (bookToUpdate)
       dispatch({
         type: "EditBook",
         payload: { ...(bookToUpdate as BookContextType), [key]: value },
       });
-    }
   };
 
   const handleEdit = (id: number) => {
-    setData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          const isEdit = item.status === "EDIT";
-          if (!isEdit && !selectedRowKeys.includes(id)) {
-            setSelectedRowKeys((prev) => [...prev, id]);
-          }
-          return { ...item, status: isEdit ? null : "EDIT" };
-        }
-        return item;
-      })
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, status: item.status === "EDIT" ? null : "EDIT" }
+          : item
+      )
+    );
+    setSelectedRowKeys((prev) =>
+      prev.includes(id) ? prev.filter((k) => k !== id) : [...prev, id]
     );
   };
 
   const handleRemove = (id: number) => {
-    setData(data.filter((item) => item.id !== id));
-    setSelectedRowKeys(selectedRowKeys.filter((key) => key !== id));
+    setData((prev) => prev.filter((i) => i.id !== id));
+    setSelectedRowKeys((prev) => prev.filter((k) => k !== id));
   };
 
-  const rowKey = "id";
-
-  const handleExpanded = (rowData: Book | undefined) => {
-    if (!rowData) return;
-    const currentId = rowData[rowKey];
-    const isCurrentlyExpanded = expandedRowKeys.includes(currentId as number);
+  const handleExpanded = (row?: Book) => {
+    if (!row) return;
     setExpandedRowKeys((prev) =>
-      isCurrentlyExpanded
-        ? prev.filter((key) => key !== currentId)
-        : [...prev, currentId as number]
+      prev.includes(row.id)
+        ? prev.filter((k) => k !== row.id)
+        : [...prev, row.id]
     );
   };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const allIds = data.map((item) => item.id);
+      const allIds = data.map((i) => i.id);
       setSelectedRowKeys(allIds);
-      setData((prev) => prev.map((item) => ({ ...item, status: "EDIT" })));
+      setData((prev) => prev.map((i) => ({ ...i, status: "EDIT" })));
     } else {
       setSelectedRowKeys([]);
-      setData((prev) => prev.map((item) => ({ ...item, status: null })));
+      setData((prev) => prev.map((i) => ({ ...i, status: null })));
     }
   };
 
-  const handleSelect = (rowData: Book) => {
-    const currentId = rowData.id;
-    const isSelected = selectedRowKeys.includes(currentId);
-    if (isSelected) {
-      setSelectedRowKeys(selectedRowKeys.filter((key) => key !== currentId));
-      setData((prev) =>
-        prev.map((item) =>
-          item.id === currentId ? { ...item, status: null } : item
-        )
-      );
+  const handleSelect = (row: Book) => {
+    const id = row.id;
+    if (selectedRowKeys.includes(id)) {
+      setSelectedRowKeys((p) => p.filter((k) => k !== id));
+      setData((p) => p.map((i) => (i.id === id ? { ...i, status: null } : i)));
     } else {
-      setSelectedRowKeys([...selectedRowKeys, currentId]);
-      setData((prev) =>
-        prev.map((item) =>
-          item.id === currentId ? { ...item, status: "EDIT" } : item
-        )
+      setSelectedRowKeys((p) => [...p, id]);
+      setData((p) =>
+        p.map((i) => (i.id === id ? { ...i, status: "EDIT" } : i))
       );
     }
   };
 
-  const renderRowExpanded = (rowData?: Book) => {
-    if (!rowData) return <div>No details available.</div>;
-    return (
+  const handleMassEdit = async () => {
+    const toEdit = books.filter((b) => selectedRowKeys.includes(b.id));
+    const unsaved = toEdit.filter((b) => b.id < 0);
+    if (unsaved.length) {
+      setAlertProps({
+        severity: "warning",
+        message: "Please save new records before mass edit.",
+        color: "warning",
+        isVisible: true,
+      });
+      return;
+    }
+
+    setSelectedRowKeys([]);
+    setData((p) => p.map((i) => ({ ...i, status: null })));
+
+    try {
+      const result = await MassEditBookAsync(
+        BookToBookMassEditBookMapperArray(
+          toEdit as BookContextType[]
+        ) as BookPostMassEdit[]
+      );
+      dispatch({ type: "MassEditBooks", payload: result as BookContextType[] });
+      setAlertProps({ ...BookMassEditAlertProps });
+
+      // sync API changes back into local data
+      setData((prev) =>
+        prev.map((row) => {
+          const updated = (result as Book[]).find((r) => r.id === row.id);
+          return updated ? { ...row, ...updated, status: null } : row;
+        })
+      );
+    } catch {
+      setAlertProps({ ...BookMassEditErrorAlertProps });
+    }
+  };
+
+  const renderRowExpanded = (row?: Book) =>
+    row ? (
       <div className={customStyles.expandedRowContent}>
         <p className={customStyles.detailField}>
           <strong>Description</strong>
         </p>
-        <p>
-          <span className={customStyles.descriptionText}>
-            {rowData.description}
-          </span>
-        </p>
+        <p className={customStyles.descriptionText}>{row.description}</p>
       </div>
+    ) : (
+      <div>No details available.</div>
     );
-  };
 
   const isAllSelected =
-    selectedRowKeys.length === data.length && data.length > 0;
+    data.length > 0 && selectedRowKeys.length === data.length;
   const isIndeterminate =
     selectedRowKeys.length > 0 && selectedRowKeys.length < data.length;
-
-  const handleMassEdit = async () => {
-    const booksForMassEdit = books.filter((book) =>
-      selectedRowKeys.includes(book.id)
-    );
-    setSelectedRowKeys([]);
-    setData((prev) => prev.map((item) => ({ ...item, status: null })));
-
-    try {
-      const data = await MassEditBookAsync(
-        BookToBookMassEditBookMapperArray(
-          booksForMassEdit as BookContextType[]
-        ) as BookPostMassEdit[]
-      );
-
-      if (data) {
-        dispatch({
-          type: "MassEditBooks",
-          payload: data as BookContextType[],
-        });
-        setAlertProps(BookMassEditAlertProps);
-      }
-    } catch (error) {
-      console.error("Error during mass edit:", error);
-      setAlertProps(BookMassEditErrorAlertProps);
-    }
-  };
 
   return (
     <div className={customStyles.container}>
       <style>{inlineStyles}</style>
-      <div>
+
+      <div style={{ marginBottom: 12 }}>
         <Button
           onClick={handleMassEdit}
           disabled={selectedRowKeys.length === 0}
           appearance="primary"
         >
-          Apply Mass Edit ({selectedRowKeys.length} selected)
+          Apply Mass Edit ({selectedRowKeys.length})
         </Button>
-
         <Button
           onClick={() => {
-            let newId = -Math.floor(Date.now() + Math.random() * 1000);
-
-            const newRecord = {
+            const newId = -Date.now();
+            const rec: Book = {
               id: newId,
               title: "",
               author: "",
@@ -210,57 +200,53 @@ export const BookTable = () => {
               updatedAt: new Date(),
               status: "EDIT",
             };
-
-            dispatch({ type: "AddBook", payload: newRecord });
-            setData((prevData) => [newRecord, ...prevData]);
-            setSelectedRowKeys((prev) => [newRecord.id, ...prev]);
+            dispatch({ type: "AddBook", payload: rec as BookContextType });
+            setData((p) => [rec, ...p]);
+            // no auto-selection here
           }}
           appearance="ghost"
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: 10 }}
         >
           Add record
         </Button>
       </div>
-      <hr />
+
       <Table
         height={550}
         data={data}
-        rowKey={rowKey}
+        rowKey="id"
         expandedRowKeys={expandedRowKeys}
         renderRowExpanded={renderRowExpanded}
       >
-        <Column width={50} align="center">
+        {/* Selection column */}
+        <Column width={50} align="center" fixed>
           <HeaderCell style={{ padding: 0 }}>
-            <div style={{ lineHeight: "40px" }}>
-              <Checkbox
-                checked={isAllSelected}
-                indeterminate={isIndeterminate}
-                onChange={(_, checked) => handleSelectAll(checked)}
-              />
-            </div>
+            <Checkbox
+              checked={isAllSelected}
+              indeterminate={isIndeterminate}
+              onChange={(_, chk) => handleSelectAll(chk)}
+            />
           </HeaderCell>
           <Cell style={{ padding: 0 }}>
-            {(rowData: Book) => (
-              <div style={{ lineHeight: "40px" }}>
-                <Checkbox
-                  value={rowData.id}
-                  checked={selectedRowKeys.includes(rowData.id)}
-                  onChange={() => handleSelect(rowData)}
-                />
-              </div>
+            {(row: Book) => (
+              <Checkbox
+                checked={selectedRowKeys.includes(row.id)}
+                onChange={() => handleSelect(row)}
+              />
             )}
           </Cell>
         </Column>
 
+        {/* Expand/Collapse */}
         <Column width={50} align="center">
-          <HeaderCell>...</HeaderCell>
+          <HeaderCell>…</HeaderCell>
           <ExpandCell
-            dataKey="id"
             expandedRowKeys={expandedRowKeys}
             onChange={handleExpanded}
           />
         </Column>
 
+        {/* Editable data columns */}
         <Column flexGrow={1}>
           <HeaderCell>Title</HeaderCell>
           <EditableCell
@@ -270,7 +256,6 @@ export const BookTable = () => {
             onEdit={handleEdit}
           />
         </Column>
-
         <Column flexGrow={1}>
           <HeaderCell>Author</HeaderCell>
           <EditableCell
@@ -280,7 +265,6 @@ export const BookTable = () => {
             onEdit={handleEdit}
           />
         </Column>
-
         <Column flexGrow={1}>
           <HeaderCell>Description</HeaderCell>
           <EditableCell
@@ -291,32 +275,32 @@ export const BookTable = () => {
           />
         </Column>
 
+        {/* Timestamps */}
         <Column flexGrow={0.5}>
           <HeaderCell>Created At</HeaderCell>
           <Cell dataKey="createdAt">
-            {(rowData: Book) =>
-              rowData.createdAt instanceof Date
-                ? rowData.createdAt.toLocaleDateString()
-                : String(rowData.createdAt)
+            {(r: Book) =>
+              r.createdAt instanceof Date
+                ? r.createdAt.toLocaleDateString()
+                : String(r.createdAt)
             }
           </Cell>
         </Column>
-
         <Column flexGrow={0.5}>
           <HeaderCell>Updated At</HeaderCell>
           <Cell dataKey="updatedAt">
-            {(rowData: Book) =>
-              rowData.updatedAt instanceof Date
-                ? rowData.updatedAt.toLocaleDateString()
-                : String(rowData.updatedAt)
+            {(r: Book) =>
+              r.updatedAt instanceof Date
+                ? r.updatedAt.toLocaleDateString()
+                : String(r.updatedAt)
             }
           </Cell>
         </Column>
 
+        {/* Actions */}
         <Column width={100}>
           <HeaderCell>Action</HeaderCell>
           <ActionCell
-            dataKey="id"
             onEdit={handleEdit}
             onRemove={handleRemove}
             bookDataFromLocalState={data}
@@ -325,6 +309,7 @@ export const BookTable = () => {
           />
         </Column>
       </Table>
+
       <AlertToast alertProps={alertProps} />
     </div>
   );
