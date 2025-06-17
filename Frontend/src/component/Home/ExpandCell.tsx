@@ -29,10 +29,10 @@ export const ExpandCell = ({
           onChange(rowData);
         }}
         icon={
-          expandedRowKeys.some((key) => key === [rowKey]) ? (
+          expandedRowKeys.some((key) => key == [rowKey]) ? (
             <MoreIcon />
           ) : (
-            <MoreIcon />
+            <ExpandOutlineIcon />
           )
         }
       />

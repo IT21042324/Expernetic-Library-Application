@@ -5,11 +5,11 @@ import BookContextProvider from "./context/BookContext";
 
 function App() {
   return (
-    <BookContextProvider>
-      <CustomProvider theme="dark">
+    <CustomProvider theme="dark">
+      <BookContextProvider>
         <Home />
-      </CustomProvider>
-    </BookContextProvider>
+      </BookContextProvider>
+    </CustomProvider>
   );
 }
 

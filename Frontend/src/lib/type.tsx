@@ -44,7 +44,7 @@ export type ActionCellProps = {
   style?: React.CSSProperties;
   bookDataFromLocalState: BookContextType[];
   setBookDataFromLocalState: React.Dispatch<React.SetStateAction<Book[]>>;
-} & React.ComponentProps<typeof Table.Cell>;
+};
 
 export type BookContextType = {
   id: number;

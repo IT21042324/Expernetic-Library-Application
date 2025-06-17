@@ -1,61 +1,93 @@
-import { createContext, useReducer } from "react";
+// src/context/BookContext.tsx
+
+import { createContext, useReducer, useEffect } from "react"; // Import useEffect and ReactNode
 import type {
   ActionState,
   BookContextProviderProps,
-  BookContextType,
   BookState,
+  Book,
+  BookContextType,
 } from "../lib/type";
+import { FetchAllBooksAsync } from "../api/BackEndApiCall";
 
-export const BookContext = createContext<
-  | {
-      books: BookContextType[];
-      dispatch: React.Dispatch<ActionState>;
-    }
-  | undefined
->(undefined);
+interface BookContextValue {
+  books: BookContextType[];
+  dispatch: React.Dispatch<ActionState>;
+}
+
+export const BookContext = createContext<BookContextValue | undefined>(
+  undefined
+);
+
+function reducer(state: BookState, action: ActionState): BookState {
+  switch (action.type) {
+    case "AddBook":
+      return {
+        ...state,
+        books: [...state.books, action.payload as Book],
+      };
+
+    case "LoadBooks":
+      return {
+        ...state,
+        books: action.payload as Book[],
+      };
+
+    case "DeleteBook":
+      return {
+        ...state,
+        books: state.books.filter((data) => data.id !== action.payload.id),
+      };
+
+    case "EditBook":
+      return {
+        ...state,
+        books: state.books.map((book) =>
+          book.id === action.payload.id ? { ...book, ...action.payload } : book
+        ),
+      };
+
+    default:
+      return state;
+  }
+}
 
 const BookContextProvider = (props: BookContextProviderProps) => {
-  function reducer(state: BookState, action: ActionState) {
-    switch (action.type) {
-      case "AddBook":
-        return {
-          ...state,
-          books: [...state.books, action.payload],
-        };
-
-      case "LoadBooks":
-        return {
-          ...state,
-          books: action.payload,
-        };
-
-      case "DeleteBook":
-        return {
-          ...state,
-          books: state.books.filter((data) => data.id !== action.payload.id),
-        };
-
-      case "EditBook":
-        return {
-          ...state,
-          books: state.books.map((book) =>
-            book.id === action.payload.id
-              ? { ...book, ...action.payload }
-              : book
-          ),
-        };
-
-      default:
-        return state;
-    }
-  }
-
-  const [book, dispatch] = useReducer(reducer, {
+  const [bookState, dispatch] = useReducer(reducer, {
     books: [],
   });
 
+  useEffect(() => {
+    const loadBooks = async () => {
+      try {
+        const data = await FetchAllBooksAsync();
+
+        if (data?.length > 0) {
+          const processedData: Book[] = data.map((book: any) => ({
+            ...book,
+            createdAt: book.createdAt ? new Date(book.createdAt) : new Date(),
+            updatedAt: book.updatedAt ? new Date(book.updatedAt) : new Date(),
+            status: book.status || null,
+          }));
+
+          dispatch({
+            type: "LoadBooks",
+            payload: processedData as BookContextType[],
+          });
+        } else {
+          console.warn("No books found or empty response from API.");
+          dispatch({ type: "LoadBooks", payload: [] as BookContextType[] });
+        }
+      } catch (err) {
+        console.error("Error fetching books in BookContextProvider:", err);
+      }
+    };
+
+    loadBooks();
+  }, []);
+
   return (
-    <BookContext.Provider value={{ ...book, dispatch }}>
+    <BookContext.Provider value={{ books: bookState.books, dispatch }}>
       {props.children}
     </BookContext.Provider>
   );

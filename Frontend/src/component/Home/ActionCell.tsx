@@ -1,9 +1,13 @@
 import { VscEdit, VscRemove, VscSave } from "react-icons/vsc";
 import { IconButton, Table } from "rsuite";
 import type { ActionCellProps, BookPost, Book } from "../../lib/type";
-import type React from "react";
-import { AddBookAsync } from "../../api/BackEndApiCall";
+import {
+  AddBookAsync,
+  DeleteBookAsync,
+  UpdateBookAsync,
+} from "../../api/BackEndApiCall";
 import { UseBookContext } from "../../context/useBookContext";
+import { Alert, AlertTitle } from "@mui/material";
 
 export const ActionCell = ({
   rowData,
@@ -19,31 +23,49 @@ export const ActionCell = ({
 
   const { books, dispatch } = UseBookContext();
 
-  const onSave = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    const bookWithChanges = books.find((book) => book.id === rowData?.id);
+  const onSave = async (bookId: number) => {
+    const bookWithChanges = books.find((book) => book.id === bookId);
 
     const { id, createdAt, updatedAt, ...bookToPost } = bookWithChanges as Book;
 
-    if (rowData?.status === "EDIT") {
-      console.log(bookToPost);
-      const data = await AddBookAsync(bookToPost as BookPost);
+    let data: Book;
 
-      if (data !== undefined && bookWithChanges !== undefined) {
+    try {
+      rowData && rowData?.id >= 0
+        ? (data = await UpdateBookAsync(id, bookToPost as BookPost))
+        : (data = await AddBookAsync(bookToPost as BookPost));
+
+      data !== undefined &&
+        bookWithChanges !== undefined &&
         dispatch({
           type: "EditBook",
           payload: {
-            ...bookWithChanges,
             ...data,
-            status: null, // Reset status after saving
+            status: null,
           },
         });
 
-        setBookDataFromLocalState(books);
-      }
-
-      event.preventDefault();
+      setBookDataFromLocalState(books as Book[]);
+    } catch (err) {
+      console.error("Error saving book:", err);
     }
-    return;
+  };
+
+  const onDelete = async (id: number) => {
+    try {
+      const data = await DeleteBookAsync(id);
+
+      if (data !== undefined) {
+        dispatch({
+          type: "DeleteBook",
+          payload: { id },
+        });
+        setBookDataFromLocalState(books as Book[]);
+        onRemove(id);
+      }
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
   };
 
   return (
@@ -56,18 +78,15 @@ export const ActionCell = ({
           <IconButton
             appearance="subtle"
             icon={rowData?.status === "EDIT" ? <VscSave /> : <VscEdit />}
-            onClick={(e) => {
+            onClick={() => {
+              onSave(rowData?.id);
               onEdit(rowData?.id);
-              console.log(rowData);
-              onSave(e);
             }}
           />
           <IconButton
             appearance="subtle"
             icon={<VscRemove />}
-            onClick={() => {
-              onRemove(rowData?.id);
-            }}
+            onClick={() => onDelete(rowData?.id as number)}
           />
         </>
       )}

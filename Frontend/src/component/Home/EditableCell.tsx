@@ -42,7 +42,6 @@ export const EditableCell = ({
           defaultValue={value as any}
           onChange={(val: any) => {
             if (rowData?.id != null) {
-              // Type guard
               onChange?.(rowData.id, dataKey, val);
             }
           }}

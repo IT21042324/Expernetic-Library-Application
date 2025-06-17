@@ -25,7 +25,7 @@ const inlineStyles = `
 .table-cell-editing .rs-input {
     width: 100%;
 }
-    
+
 /* .rs-table-expanded-row {
     max-height: 80px;
     overflow-y: auto;
@@ -35,14 +35,9 @@ const inlineStyles = `
 export const BookTable = () => {
   const [data, setData] = useState<Book[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
-  // --- NEW STATE FOR SELECTION ---
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
 
   const { books, dispatch } = UseBookContext();
-
-  const titleRef = useRef<HTMLInputElement>(null);
-  const authorRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setData(books as Book[]);
@@ -191,7 +186,8 @@ export const BookTable = () => {
 
         <Button
           onClick={() => {
-            let newId = -(Math.max(...data.map((item) => item.id)) + 1);
+            let newId = -Math.floor(Date.now() + Math.random() * 1000);
+
             setData((prevData) => [
               {
                 id: newId,
