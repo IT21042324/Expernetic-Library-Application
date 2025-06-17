@@ -43,8 +43,24 @@ function reducer(state: BookState, action: ActionState): BookState {
       return {
         ...state,
         books: state.books.map((book) =>
-          book.id === action.payload.id ? { ...book, ...action.payload } : book
+          book.id === action.payload.id
+            ? { ...book, ...action.payload, status: null } // Force clear "EDIT"
+            : book
         ),
+      };
+
+    case "MassEditBooks":
+      return {
+        ...state,
+        books: state.books.map((book) => {
+          const updatedBook = action.payload.find((buk) => buk.id === book.id);
+          if (updatedBook)
+            return {
+              ...book,
+              ...updatedBook,
+            };
+          else return book;
+        }),
       };
 
     default:

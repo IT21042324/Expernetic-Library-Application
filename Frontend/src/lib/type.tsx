@@ -46,6 +46,7 @@ export type ActionCellProps = {
   style?: React.CSSProperties;
   bookDataFromLocalState: BookContextType[];
   setBookDataFromLocalState: React.Dispatch<React.SetStateAction<Book[]>>;
+  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 };
 
 export type BookContextType = {
@@ -75,4 +76,12 @@ export type ActionState =
   | { type: "AddBook"; payload: BookContextType }
   | { type: "LoadBooks"; payload: BookContextType[] }
   | { type: "DeleteBook"; payload: BookContextType }
-  | { type: "EditBook"; payload: BookContextType };
+  | { type: "EditBook"; payload: BookContextType }
+  | { type: "MassEditBooks"; payload: BookContextType[] };
+
+export type AlertProps = {
+  severity: "success" | "error" | "warning" | "info";
+  message: string;
+  color: "success" | "info" | "warning" | "error";
+  isVisible: boolean;
+};

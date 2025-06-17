@@ -7,7 +7,13 @@ import {
   UpdateBookAsync,
 } from "../../api/BackEndApiCall";
 import { UseBookContext } from "../../context/useBookContext";
-import { Alert, AlertTitle } from "@mui/material";
+import {
+  BookAddedAlertProps,
+  BookDeletedAlertProps,
+  BookNotFoundAlertProps,
+  BookUpdatedAlertProps,
+  ErrorSavingBookAlertProps,
+} from "../Strings/strings";
 
 export const ActionCell = ({
   rowData,
@@ -17,10 +23,10 @@ export const ActionCell = ({
   style,
   bookDataFromLocalState,
   setBookDataFromLocalState,
+  setAlertProps,
   ...props
 }: ActionCellProps) => {
   const { Cell } = Table;
-
   const { books, dispatch } = UseBookContext();
 
   const onSave = async (bookId: number) => {
@@ -31,9 +37,13 @@ export const ActionCell = ({
     let data: Book;
 
     try {
-      rowData && rowData?.id >= 0
-        ? (data = await UpdateBookAsync(id, bookToPost as BookPost))
-        : (data = await AddBookAsync(bookToPost as BookPost));
+      if (rowData && rowData?.id >= 0) {
+        data = await UpdateBookAsync(id, bookToPost as BookPost);
+        if (data) setAlertProps(BookUpdatedAlertProps);
+      } else {
+        data = await AddBookAsync(bookToPost as BookPost);
+        if (data) setAlertProps(BookAddedAlertProps);
+      }
 
       data !== undefined &&
         bookWithChanges !== undefined &&
@@ -48,6 +58,7 @@ export const ActionCell = ({
       setBookDataFromLocalState(books as Book[]);
     } catch (err) {
       console.error("Error saving book:", err);
+      setAlertProps(ErrorSavingBookAlertProps);
     }
   };
 
@@ -62,9 +73,11 @@ export const ActionCell = ({
         });
         setBookDataFromLocalState(books as Book[]);
         onRemove(id);
+        setAlertProps(BookDeletedAlertProps);
       }
     } catch (error) {
       console.error("Error deleting book:", error);
+      setAlertProps(BookNotFoundAlertProps);
     }
   };
 
@@ -73,20 +86,24 @@ export const ActionCell = ({
       {...props}
       style={{ padding: "6px", display: "flex", gap: "4px", ...style }}
     >
-      {rowData?.id && (
+      {rowData?.id != null && (
         <>
           <IconButton
             appearance="subtle"
-            icon={rowData?.status === "EDIT" ? <VscSave /> : <VscEdit />}
+            icon={rowData.status === "EDIT" ? <VscSave /> : <VscEdit />}
             onClick={() => {
-              onSave(rowData?.id);
-              onEdit(rowData?.id);
+              if (rowData.status === "EDIT") {
+                onSave(rowData.id);
+                onEdit(rowData.id);
+              } else {
+                onEdit(rowData.id);
+              }
             }}
           />
           <IconButton
             appearance="subtle"
             icon={<VscRemove />}
-            onClick={() => onDelete(rowData?.id as number)}
+            onClick={() => onDelete(rowData.id)}
           />
         </>
       )}

@@ -1,26 +1,29 @@
-import { useEffect, useRef, useState } from "react";
-import { Button, Checkbox, Table } from "rsuite"; // Import Checkbox
+import { useEffect, useState } from "react";
+import { Button, Checkbox, Table } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import type {
+  AlertProps,
   Book,
   BookContextType,
   BookField,
   BookFieldType,
-  BookPost,
   BookPostMassEdit,
 } from "../../lib/type";
 
-import { AddBookAsync, MassEditBookAsync } from "../../api/BackEndApiCall";
+import { MassEditBookAsync } from "../../api/BackEndApiCall";
 import { ActionCell } from "./ActionCell";
 import { EditableCell } from "./EditableCell";
 import { ExpandCell } from "./ExpandCell";
 
 import { UseBookContext } from "../../context/useBookContext";
+import { BookToBookMassEditBookMapperArray } from "../../utils/helper";
+import { AlertToast } from "../Alert/Alert";
 import customStyles from "./BookTable.module.css";
 import {
-  BookToBookMassEditBookMapperArray,
-  BookToBookPostMapperArray,
-} from "../../utils/helper";
+  BookMassEditAlertProps,
+  BookMassEditErrorAlertProps,
+  BooksFetchedAlertProps,
+} from "../Strings/strings";
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -31,35 +34,37 @@ const inlineStyles = `
 .table-cell-editing .rs-input {
     width: 100%;
 }
-
-/* .rs-table-expanded-row {
-    max-height: 80px;
-    overflow-y: auto;
-} */
 `;
 
 export const BookTable = () => {
   const [data, setData] = useState<Book[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
+  const [alertProps, setAlertProps] = useState<AlertProps>({
+    severity: "success",
+    message: "Book table loaded successfully!",
+    color: "success",
+    isVisible: false,
+  });
 
   const { books, dispatch } = UseBookContext();
 
   useEffect(() => {
-    setData(books as Book[]);
-  }, [books.length === 0]);
+    if (books.length > 0 && data.length === 0) {
+      const initialData = books.map((book) => ({
+        ...book,
+        status: selectedRowKeys.includes(book.id) ? "EDIT" : null,
+      }));
+      setData(initialData);
+      setAlertProps(BooksFetchedAlertProps);
+    }
+  }, [books]);
 
   const handleChange = (id: number, key: BookField, value: BookFieldType) => {
     const bookToUpdate = books.find((b) => b.id === id);
     if (!bookToUpdate) {
-      dispatch({
-        type: "AddBook",
-        payload: {
-          id,
-        },
-      });
+      dispatch({ type: "AddBook", payload: { id } });
     }
-
     if (bookToUpdate !== undefined) {
       dispatch({
         type: "EditBook",
@@ -69,65 +74,46 @@ export const BookTable = () => {
   };
 
   const handleEdit = (id: number) => {
-    const nextData = data.map((item) => {
-      if (item.id === id) {
-        const newStatus: "EDIT" | null = item.status === "EDIT" ? null : "EDIT";
-        return { ...item, status: newStatus };
-      }
-      return item;
-    });
-    setData(nextData);
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          const isEdit = item.status === "EDIT";
+          if (!isEdit && !selectedRowKeys.includes(id)) {
+            setSelectedRowKeys((prev) => [...prev, id]);
+          }
+          return { ...item, status: isEdit ? null : "EDIT" };
+        }
+        return item;
+      })
+    );
   };
 
   const handleRemove = (id: number) => {
     setData(data.filter((item) => item.id !== id));
-    // Also remove from selectedRowKeys if the row is deleted
     setSelectedRowKeys(selectedRowKeys.filter((key) => key !== id));
-  };
-
-  const handleAddNewRowOnClick = async (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
-    data: Book
-  ) => {
-    try {
-      const { id, createdAt, updatedAt, status, ...dataToSendPost } = data;
-
-      const newBook = await AddBookAsync(dataToSendPost);
-      console.log(newBook);
-
-      setData((prevData) => [newBook, ...prevData]);
-      event.preventDefault();
-    } catch (err) {
-      console.error("Error adding new book:", err);
-      return;
-    }
   };
 
   const rowKey = "id";
 
   const handleExpanded = (rowData: Book | undefined) => {
-    if (!rowData) {
-      console.warn("handleExpanded received undefined rowData");
-      return;
-    }
+    if (!rowData) return;
     const currentId = rowData[rowKey];
     const isCurrentlyExpanded = expandedRowKeys.includes(currentId as number);
-    if (isCurrentlyExpanded) {
-      setExpandedRowKeys(expandedRowKeys.filter((key) => key !== currentId));
-    } else {
-      setExpandedRowKeys([...expandedRowKeys, currentId as number]);
-    }
+    setExpandedRowKeys((prev) =>
+      isCurrentlyExpanded
+        ? prev.filter((key) => key !== currentId)
+        : [...prev, currentId as number]
+    );
   };
 
-  // --- NEW SELECTION HANDLERS ---
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      // Select all IDs from the current data
       const allIds = data.map((item) => item.id);
       setSelectedRowKeys(allIds);
+      setData((prev) => prev.map((item) => ({ ...item, status: "EDIT" })));
     } else {
-      // Deselect all
       setSelectedRowKeys([]);
+      setData((prev) => prev.map((item) => ({ ...item, status: null })));
     }
   };
 
@@ -135,20 +121,24 @@ export const BookTable = () => {
     const currentId = rowData.id;
     const isSelected = selectedRowKeys.includes(currentId);
     if (isSelected) {
-      // Deselect if already selected
       setSelectedRowKeys(selectedRowKeys.filter((key) => key !== currentId));
+      setData((prev) =>
+        prev.map((item) =>
+          item.id === currentId ? { ...item, status: null } : item
+        )
+      );
     } else {
-      // Select if not selected
       setSelectedRowKeys([...selectedRowKeys, currentId]);
+      setData((prev) =>
+        prev.map((item) =>
+          item.id === currentId ? { ...item, status: "EDIT" } : item
+        )
+      );
     }
   };
-  // --- END NEW SELECTION HANDLERS ---
 
-  // Function to render the expanded content for each row
   const renderRowExpanded = (rowData?: Book) => {
-    if (!rowData) {
-      return <div>No details available.</div>;
-    }
+    if (!rowData) return <div>No details available.</div>;
     return (
       <div className={customStyles.expandedRowContent}>
         <p className={customStyles.detailField}>
@@ -163,7 +153,6 @@ export const BookTable = () => {
     );
   };
 
-  // Determine if all rows are selected for the "Select All" checkbox
   const isAllSelected =
     selectedRowKeys.length === data.length && data.length > 0;
   const isIndeterminate =
@@ -173,8 +162,8 @@ export const BookTable = () => {
     const booksForMassEdit = books.filter((book) =>
       selectedRowKeys.includes(book.id)
     );
-
     setSelectedRowKeys([]);
+    setData((prev) => prev.map((item) => ({ ...item, status: null })));
 
     try {
       const data = await MassEditBookAsync(
@@ -182,20 +171,27 @@ export const BookTable = () => {
           booksForMassEdit as BookContextType[]
         ) as BookPostMassEdit[]
       );
+
+      if (data) {
+        dispatch({
+          type: "MassEditBooks",
+          payload: data as BookContextType[],
+        });
+        setAlertProps(BookMassEditAlertProps);
+      }
     } catch (error) {
       console.error("Error during mass edit:", error);
+      setAlertProps(BookMassEditErrorAlertProps);
     }
   };
 
   return (
-    <>
+    <div className={customStyles.container}>
       <style>{inlineStyles}</style>
-      <div className={customStyles.massEditControls}>
+      <div>
         <Button
-          onClick={() => {
-            handleMassEdit();
-          }}
-          disabled={selectedRowKeys.length === 0} // Disable if no rows selected
+          onClick={handleMassEdit}
+          disabled={selectedRowKeys.length === 0}
           appearance="primary"
         >
           Apply Mass Edit ({selectedRowKeys.length} selected)
@@ -205,18 +201,19 @@ export const BookTable = () => {
           onClick={() => {
             let newId = -Math.floor(Date.now() + Math.random() * 1000);
 
-            setData((prevData) => [
-              {
-                id: newId,
-                title: "",
-                author: "",
-                description: "",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                status: "EDIT",
-              },
-              ...prevData,
-            ]);
+            const newRecord = {
+              id: newId,
+              title: "",
+              author: "",
+              description: "",
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              status: "EDIT",
+            };
+
+            dispatch({ type: "AddBook", payload: newRecord });
+            setData((prevData) => [newRecord, ...prevData]);
+            setSelectedRowKeys((prev) => [newRecord.id, ...prev]);
           }}
           appearance="ghost"
           style={{ marginLeft: "10px" }}
@@ -226,13 +223,12 @@ export const BookTable = () => {
       </div>
       <hr />
       <Table
-        height={420}
+        height={550}
         data={data}
         rowKey={rowKey}
         expandedRowKeys={expandedRowKeys}
         renderRowExpanded={renderRowExpanded}
       >
-        {/* --- NEW COLUMN FOR SELECTION CHECKBOXES --- */}
         <Column width={50} align="center">
           <HeaderCell style={{ padding: 0 }}>
             <div style={{ lineHeight: "40px" }}>
@@ -255,9 +251,7 @@ export const BookTable = () => {
             )}
           </Cell>
         </Column>
-        {/* --- END NEW COLUMN --- */}
 
-        {/* The ExpandCell is now the second column */}
         <Column width={50} align="center">
           <HeaderCell>...</HeaderCell>
           <ExpandCell
@@ -327,9 +321,11 @@ export const BookTable = () => {
             onRemove={handleRemove}
             bookDataFromLocalState={data}
             setBookDataFromLocalState={setData}
+            setAlertProps={setAlertProps}
           />
         </Column>
       </Table>
-    </>
+      <AlertToast alertProps={alertProps} />
+    </div>
   );
 };
