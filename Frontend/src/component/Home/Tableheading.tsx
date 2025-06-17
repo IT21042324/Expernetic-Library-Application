@@ -1,8 +1,5 @@
+import styles from "./heading.module.css";
+
 export const TableHeading = () => {
-  return (
-    <div>
-      Library Book List
-      <div>Options Menu</div>
-    </div>
-  );
+  return <div className={styles.container}>Library Book List</div>;
 };

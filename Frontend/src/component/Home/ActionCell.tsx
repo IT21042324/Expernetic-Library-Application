@@ -1,4 +1,3 @@
-// src/components/BookTable/ActionCell.tsx
 import React from "react";
 import { IconButton, Table } from "rsuite";
 import { VscEdit, VscRemove, VscSave } from "react-icons/vsc";

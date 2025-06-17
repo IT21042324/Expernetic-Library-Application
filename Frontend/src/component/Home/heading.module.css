@@ -1,0 +1,10 @@
+.container {
+    text-align: center;
+    font-size: 3rem;
+    line-height: 1.8em;
+}
+
+.container::selection {
+    background-color: #f0f0f0;
+    color: #000;
+}
