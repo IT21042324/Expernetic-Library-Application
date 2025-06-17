@@ -12,6 +12,8 @@ export type Book = {
 
 export type BookPost = Omit<Book, "id" | "createdAt" | "updatedAt">;
 
+export type BookPostMassEdit = Omit<Book, "createdAt" | "updatedAt">;
+
 export type BookField =
   | "id"
   | "title"

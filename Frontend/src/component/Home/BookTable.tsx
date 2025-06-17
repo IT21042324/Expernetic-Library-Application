@@ -6,15 +6,21 @@ import type {
   BookContextType,
   BookField,
   BookFieldType,
+  BookPost,
+  BookPostMassEdit,
 } from "../../lib/type";
 
-import { AddBookAsync } from "../../api/BackEndApiCall";
+import { AddBookAsync, MassEditBookAsync } from "../../api/BackEndApiCall";
 import { ActionCell } from "./ActionCell";
 import { EditableCell } from "./EditableCell";
 import { ExpandCell } from "./ExpandCell";
 
 import { UseBookContext } from "../../context/useBookContext";
 import customStyles from "./BookTable.module.css";
+import {
+  BookToBookMassEditBookMapperArray,
+  BookToBookPostMapperArray,
+} from "../../utils/helper";
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -163,20 +169,31 @@ export const BookTable = () => {
   const isIndeterminate =
     selectedRowKeys.length > 0 && selectedRowKeys.length < data.length;
 
+  const handleMassEdit = async () => {
+    const booksForMassEdit = books.filter((book) =>
+      selectedRowKeys.includes(book.id)
+    );
+
+    setSelectedRowKeys([]);
+
+    try {
+      const data = await MassEditBookAsync(
+        BookToBookMassEditBookMapperArray(
+          booksForMassEdit as BookContextType[]
+        ) as BookPostMassEdit[]
+      );
+    } catch (error) {
+      console.error("Error during mass edit:", error);
+    }
+  };
+
   return (
     <>
       <style>{inlineStyles}</style>
       <div className={customStyles.massEditControls}>
         <Button
           onClick={() => {
-            // Logic for "Apply Mass Edit" button
-            // iterate through `selectedRowKeys` and apply changes to `data`
-            // Example: console.log("Mass editing:", selectedRowKeys);
-            alert(
-              `Initiating mass edit for IDs: ${selectedRowKeys.join(", ")}`
-            );
-            // Reset selected keys after action
-            // setSelectedRowKeys([]);
+            handleMassEdit();
           }}
           disabled={selectedRowKeys.length === 0} // Disable if no rows selected
           appearance="primary"

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Book, BookPost } from "../lib/type";
+import type { Book, BookPost, BookPostMassEdit } from "../lib/type";
 
 export const FetchAllBooksAsync = async (): Promise<Book[]> => {
   try {
@@ -38,6 +38,21 @@ export const UpdateBookAsync = async (
     return data;
   } catch (error) {
     console.error("Error updating book:", error);
+    throw error;
+  }
+};
+
+export const MassEditBookAsync = async (
+  booksToMassEdit: BookPostMassEdit[]
+) => {
+  try {
+    const { data } = await axios.patch(
+      "https://localhost:7137/api/books/mass-edit",
+      booksToMassEdit
+    );
+    return data;
+  } catch (error) {
+    console.error("Error mass editing books:", error);
     throw error;
   }
 };
