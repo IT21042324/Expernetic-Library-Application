@@ -3248,11 +3248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
+      "projectUniqueName": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\LibraryApp.csproj",
       "projectName": "LibraryApp",
-      "projectPath": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
+      "projectPath": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\LibraryApp.csproj",
       "packagesPath": "C:\\Users\\imree\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\obj\\",
+      "outputPath": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -2,7 +2,6 @@ using LibraryApp.Data;
 using LibraryApp.ExceptionFilter;
 using LibraryApp.Service;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +19,19 @@ builder.Services.AddScoped<BookService>();
 builder.Services.AddDbContext<LibraryDbContext>(options => options.
 UseSqlite(builder.Configuration.GetConnectionString("DBConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.AllowAnyOrigin() // to make sure anyone can access the backend for now
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
