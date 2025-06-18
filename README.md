@@ -35,3 +35,8 @@ The React app will open automatically in your browser
 ### 4. Create a user account
 
 After the frontend loads, register a new user via the UI. Logging in enables access to the library’s books and operations.
+
+### 5. Explore the API (Scalar)
+
+Additionally, with the backend running, open https://localhost:7137/Scalar/ in your browser.
+Scalar provides an interactive UI where you can explore and test all available API endpoints.
