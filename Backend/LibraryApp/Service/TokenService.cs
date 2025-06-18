@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryApp.Service
 {
-    // we use this service to generate tokens for your users after his un and pwd is correctly validated
+    // we use this service to generate tokens for users after his un and pwd is correctly validated
     public sealed class TokenService(IOptions<JwtSettings> opts)
     {
         private readonly JwtSettings _jwt = opts.Value;

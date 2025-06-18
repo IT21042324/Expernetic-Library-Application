@@ -19,6 +19,8 @@
     top: 0;
     cursor: pointer;
     font-size: 0.6em;
+    line-height: 1;
+    padding: 3px;
 }
 
 .container .logoutIcon:hover {

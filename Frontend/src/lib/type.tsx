@@ -5,8 +5,8 @@ export type Book = {
   title: string;
   author: string;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   status?: "EDIT" | "VIEW" | null;
   isDirty?: boolean; // New field to track if the book has unsaved changes
 };

@@ -10,6 +10,7 @@ import type {
 } from "../lib/type";
 import { FetchAllBooksAsync } from "../api/BackEndApiCall";
 import { UseAuthContext } from "./useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface BookContextValue {
   books: BookContextType[];
@@ -74,7 +75,7 @@ const BookContextProvider = (props: BookContextProviderProps) => {
     books: [],
   });
 
-  const { token } = UseAuthContext();
+  const { token, logout } = UseAuthContext();
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -99,6 +100,13 @@ const BookContextProvider = (props: BookContextProviderProps) => {
         }
       } catch (err) {
         console.error("Error fetching books in BookContextProvider:", err);
+
+        const { status } = err as { status?: number };
+
+        if (status === 401) {
+          // token expired or invalid → logout the user
+          logout();
+        }
       }
     };
 

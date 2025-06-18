@@ -35,9 +35,10 @@ export const ActionCell: React.FC<ActionCellProps> = ({
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
 
-  // Save handler (unchanged)
   const onSave = async (tempId: number) => {
     const book = bookDataFromLocalState.find((b) => b.id === tempId)!;
+
+    // Required‐field validation
     const missing: string[] = [];
     if (!book.title?.trim()) missing.push("Title");
     if (!book.author?.trim()) missing.push("Author");
@@ -53,21 +54,59 @@ export const ActionCell: React.FC<ActionCellProps> = ({
       });
       return;
     }
+
+    // Only allow letters and spaces in author
+    const author = book.author ?? "";
+    if (/[^A-Za-z\s]/.test(author)) {
+      SetAndDisplayAlert({
+        severity: "error",
+        color: "error",
+        isVisible: true,
+        message: "Author name may only contain letters and spaces.",
+      });
+      return;
+    }
+
+    // strip out non-payload properties
     const { id: _, status, createdAt, updatedAt, ...payload } = book as Book;
+
     try {
-      let saved: Book;
+      let savedRaw: Book;
+
       if (tempId < 0) {
-        saved = await AddBookAsync(payload as BookPost);
-        dispatch({ type: "AddBook", payload: saved });
+        // CREATE
+        savedRaw = await AddBookAsync(payload as BookPost);
         SetAndDisplayAlert(BookAddedAlertProps);
       } else {
-        saved = await UpdateBookAsync(tempId, payload as BookPost);
-        dispatch({ type: "EditBook", payload: { ...saved, status: null } });
+        // UPDATE
+        savedRaw = await UpdateBookAsync(tempId, payload as BookPost);
         SetAndDisplayAlert(BookUpdatedAlertProps);
       }
+
+      // Parse timestamps into Date instances
+      const saved: Book = {
+        ...savedRaw,
+        createdAt: new Date(savedRaw.createdAt ?? Date.now()),
+        updatedAt: new Date(savedRaw.updatedAt ?? Date.now()),
+      };
+
+      // Update context
+      if (tempId < 0) {
+        dispatch({ type: "AddBook", payload: saved });
+      } else {
+        dispatch({ type: "EditBook", payload: { ...saved, status: null } });
+      }
+
+      // Update local table state
       setBookDataFromLocalState((prev) =>
         prev.map((r) =>
-          r.id === tempId ? { ...saved, status: null, isDirty: false } : r
+          r.id === tempId
+            ? ({
+                ...saved,
+                status: null,
+                isDirty: false,
+              } as Book)
+            : r
         )
       );
     } catch {
@@ -77,9 +116,9 @@ export const ActionCell: React.FC<ActionCellProps> = ({
     }
   };
 
-  // Actual delete logic
   const onDelete = async (id: number) => {
     if (id < 0) {
+      // just client‐side
       dispatch({ type: "DeleteBook", payload: { id } });
       setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
       onRemove(id);
@@ -97,13 +136,11 @@ export const ActionCell: React.FC<ActionCellProps> = ({
     }
   };
 
-  // Open confirmation modal
   const confirmDeletion = (id: number) => {
     setPendingDeleteId(id);
     setConfirmOpen(true);
   };
 
-  // User confirmed deletion
   const handleConfirm = () => {
     if (pendingDeleteId != null) onDelete(pendingDeleteId);
     setConfirmOpen(false);

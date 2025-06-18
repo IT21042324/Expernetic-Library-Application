@@ -1,3 +1,4 @@
+// src/components/BookTable/BookTable.tsx
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Table } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
@@ -28,7 +29,7 @@ import customStyles from "./BookTable.module.css";
 
 const { Column, HeaderCell, Cell } = Table;
 
-// Inline styles applied for edit mode
+/* Inline styles applied for edit mode */
 const inlineStyles = `
 .table-cell-editing .rs-table-cell-content {
   padding: 4px;
@@ -42,43 +43,32 @@ const inlineStyles = `
 `;
 
 export const BookTable: React.FC = () => {
-  // --- Local state ---
   const [data, setData] = useState<Book[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
-
   const { SetAndDisplayAlert } = useAlertContext();
-  // Context provides master list and dispatch
   const { books, dispatch } = UseBookContext();
 
-  // --- Initialize table data when context loads ---
+  /* Initialize from context */
   useEffect(() => {
     if (books.length > 0 && data.length === 0) {
       const initialData = books.map((book) => ({
         ...book,
         status: selectedRowKeys.includes(book.id) ? "EDIT" : null,
-        isDirty: false, // ← new flag
+        isDirty: false,
       }));
       setData(initialData as Book[]);
-
       SetAndDisplayAlert(BooksFetchedAlertProps);
     }
   }, [books]);
 
-  // --- Handlers for edit and change events ---
-
-  // Update local table state and context when a cell value changes
+  /* Cell edits */
   const handleChange = (id: number, key: BookField, value: BookFieldType) => {
-    // 1) Update local table state so blanks & edits stick
     setData((prev) =>
       prev.map((item) =>
-        item.id === id
-          ? { ...item, [key]: value, isDirty: true } // ← dirty now true
-          : item
+        item.id === id ? { ...item, [key]: value, isDirty: true } : item
       )
     );
-
-    // 2) (optional) keep context in sync
     const bookToUpdate = books.find((b) => b.id === id);
     if (bookToUpdate) {
       dispatch({
@@ -88,7 +78,7 @@ export const BookTable: React.FC = () => {
     }
   };
 
-  // Toggle edit mode and selection for a single row
+  /* Toggle edit‐mode & selection */
   const handleEdit = (id: number) => {
     setData((prev) =>
       prev.map((item) =>
@@ -102,13 +92,13 @@ export const BookTable: React.FC = () => {
     );
   };
 
-  // Remove a row locally (and clear selection)
+  /* Remove row */
   const handleRemove = (id: number) => {
     setData((prev) => prev.filter((i) => i.id !== id));
     setSelectedRowKeys((prev) => prev.filter((k) => k !== id));
   };
 
-  // Toggle expanded detail row
+  /* Expand detail */
   const handleExpanded = (row?: Book) => {
     if (!row) return;
     setExpandedRowKeys((prev) =>
@@ -118,20 +108,25 @@ export const BookTable: React.FC = () => {
     );
   };
 
-  // Select or deselect all rows
+  /* Select / Deselect all—but only saved rows */
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const allIds = data.map((i) => i.id);
+      const allIds = data.filter((r) => r.id >= 0).map((i) => i.id);
       setSelectedRowKeys(allIds);
-      setData((prev) => prev.map((i) => ({ ...i, status: "EDIT" })));
+      setData((prev) =>
+        prev.map((i) => (i.id >= 0 ? { ...i, status: "EDIT" } : i))
+      );
     } else {
       setSelectedRowKeys([]);
-      setData((prev) => prev.map((i) => ({ ...i, status: null })));
+      setData((prev) =>
+        prev.map((i) => (i.id >= 0 ? { ...i, status: null } : i))
+      );
     }
   };
 
-  // Toggle selection for a single row
+  /* Toggle single row—but block unsaved */
   const handleSelect = (row: Book) => {
+    if (row.id < 0) return; // ← block selecting temp rows
     const id = row.id;
     if (selectedRowKeys.includes(id)) {
       setSelectedRowKeys((p) => p.filter((k) => k !== id));
@@ -144,9 +139,9 @@ export const BookTable: React.FC = () => {
     }
   };
 
-  // --- Mass edit handler ---
+  /* Mass‐edit */
   const handleMassEdit = async () => {
-    // ── VALIDATION FOR MASS EDIT ──────────────────────────────────────────
+    /* blank‐field validation */
     const invalid = data.filter(
       (row) =>
         selectedRowKeys.includes(row.id) &&
@@ -157,46 +152,68 @@ export const BookTable: React.FC = () => {
         severity: "error",
         color: "error",
         isVisible: true,
-        message: `Please fill Title, Author & Description for all selected records (Titled: ${invalid
+        message: `Please fill Title, Author & Description (Titled: ${invalid
           .map((r) => r.title)
           .join(", ")})`,
       });
-
       return;
     }
-    // ────────────────────────────────────────────────────────────────────
 
-    // Filter selected books, ensure all are saved
-    const toEdit = books.filter((b) => selectedRowKeys.includes(b.id));
+    // find any row where author contains digits OR special chars
+    const invalidNames = data.filter(
+      (row) =>
+        selectedRowKeys.includes(row.id) && /[^A-Za-z\s]/.test(row.author ?? "")
+    );
+
+    if (invalidNames.length) {
+      SetAndDisplayAlert({
+        severity: "error",
+        color: "error",
+        isVisible: true,
+        message: `Author must only contain letters and spaces (Titled: ${invalidNames
+          .map((r) => r.title || "<untitled>")
+          .join(", ")})`,
+      });
+      return;
+    }
+
+    /* ensure only saved rows */
+    let toEdit = books.filter((b) => selectedRowKeys.includes(b.id));
+    toEdit = toEdit.filter((b) => b.id >= 0);
+    if (toEdit.length === 0) return;
+
+    /* ensure no temp rows */
     const unsaved = toEdit.filter((b) => b.id < 0);
     if (unsaved.length) {
       SetAndDisplayAlert(SaveNewRecordsBeforeMassEditAlertProps);
       return;
     }
 
-    // Clear selections & edit flags
+    /* clear UI */
     setSelectedRowKeys([]);
     setData((p) => p.map((i) => ({ ...i, status: null })));
 
     try {
-      const result = await MassEditBookAsync(
+      const raw = await MassEditBookAsync(
         BookToBookMassEditBookMapperArray(
           toEdit as BookContextType[]
         ) as BookPostMassEdit[]
       );
+      const parsed = raw.map((r) => ({
+        ...r,
+        createdAt: new Date(r.createdAt ?? Date.now()),
+        updatedAt: new Date(r.updatedAt ?? Date.now()),
+      }));
 
-      if (result.length > 0) {
+      if (parsed.length > 0) {
         dispatch({
           type: "MassEditBooks",
-          payload: result as BookContextType[],
+          payload: parsed as BookContextType[],
         });
-
         SetAndDisplayAlert(BookMassEditAlertProps);
-
-        // Merge updated data back into table
         setData((prev) =>
           prev.map((row) => {
-            const updated = (result as Book[]).find((r) => r.id === row.id);
+            const updated = parsed.find((r) => r.id === row.id);
             return updated ? { ...row, ...updated, status: null } : row;
           })
         );
@@ -208,7 +225,7 @@ export const BookTable: React.FC = () => {
     }
   };
 
-  // --- Render Expanded Content ---
+  /* Expanded detail */
   const renderRowExpanded = (row?: Book) =>
     row?.description ? (
       <div className={customStyles.expandedRowContent}>
@@ -221,19 +238,16 @@ export const BookTable: React.FC = () => {
       <p className={customStyles.noContent}>No details available.</p>
     );
 
-  // Determine header checkbox states
   const isAllSelected =
     data.length > 0 && selectedRowKeys.length === data.length;
   const isIndeterminate =
     selectedRowKeys.length > 0 && selectedRowKeys.length < data.length;
 
-  // --- JSX Output ---
   return (
     <div className={customStyles.container}>
       <style>{inlineStyles}</style>
 
       <div style={{ marginBottom: 12 }}>
-        {/* Mass Edit Button */}
         <Button
           onClick={handleMassEdit}
           disabled={selectedRowKeys.length === 0}
@@ -242,6 +256,8 @@ export const BookTable: React.FC = () => {
           Apply Mass Edit ({selectedRowKeys.length})
         </Button>
         <Button
+          appearance="ghost"
+          style={{ marginLeft: 10 }}
           onClick={() => {
             const newId = -Date.now();
             const rec: Book & { isDirty: boolean } = {
@@ -252,13 +268,12 @@ export const BookTable: React.FC = () => {
               createdAt: new Date(),
               updatedAt: new Date(),
               status: "EDIT",
-              isDirty: false, // ← start out clean
+              isDirty: false,
             };
             dispatch({ type: "AddBook", payload: rec as BookContextType });
             setData((p) => [rec, ...p]);
+            // ← no selection here
           }}
-          appearance="ghost"
-          style={{ marginLeft: 10 }}
         >
           Add record
         </Button>
@@ -271,7 +286,7 @@ export const BookTable: React.FC = () => {
         expandedRowKeys={expandedRowKeys}
         renderRowExpanded={renderRowExpanded}
       >
-        {/* Selection column */}
+        {/* Selection */}
         <Column width={50} align="center" fixed>
           <HeaderCell style={{ padding: 0 }}>
             <Checkbox
@@ -290,7 +305,7 @@ export const BookTable: React.FC = () => {
           </Cell>
         </Column>
 
-        {/* Expand/Collapse column */}
+        {/* Expand/Collapse */}
         <Column width={50} align="center">
           <HeaderCell>…</HeaderCell>
           <ExpandCell
@@ -328,7 +343,7 @@ export const BookTable: React.FC = () => {
           />
         </Column>
 
-        {/* Timestamp columns */}
+        {/* Timestamps */}
         <Column flexGrow={0.5}>
           <HeaderCell>Created At</HeaderCell>
           <Cell dataKey="createdAt">
@@ -350,7 +365,7 @@ export const BookTable: React.FC = () => {
           </Cell>
         </Column>
 
-        {/* Action column */}
+        {/* Action */}
         <Column width={100}>
           <HeaderCell>Action</HeaderCell>
           <ActionCell
