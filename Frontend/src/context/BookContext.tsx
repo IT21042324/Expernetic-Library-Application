@@ -9,6 +9,7 @@ import type {
   BookContextType,
 } from "../lib/type";
 import { FetchAllBooksAsync } from "../api/BackEndApiCall";
+import { UseAuthContext } from "./useAuthContext";
 
 interface BookContextValue {
   books: BookContextType[];
@@ -73,6 +74,8 @@ const BookContextProvider = (props: BookContextProviderProps) => {
     books: [],
   });
 
+  const { token } = UseAuthContext();
+
   useEffect(() => {
     const loadBooks = async () => {
       try {
@@ -99,8 +102,8 @@ const BookContextProvider = (props: BookContextProviderProps) => {
       }
     };
 
-    loadBooks();
-  }, []);
+    if (token) loadBooks();
+  }, [token]);
 
   return (
     <BookContext.Provider value={{ books: bookState.books, dispatch }}>

@@ -3,9 +3,9 @@
     font-size: 3rem;
     line-height: 1.8em;
 
-    position: relative;
-
+    position: sticky;
     top: 30px;
+
 }
 
 .container::selection {

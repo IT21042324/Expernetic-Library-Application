@@ -1,4 +1,5 @@
-import React from "react";
+// src/components/BookTable/ActionCell.tsx
+import React, { useState } from "react";
 import { IconButton, Table } from "rsuite";
 import { VscEdit, VscRemove, VscSave } from "react-icons/vsc";
 import type { ActionCellProps, Book, BookPost } from "../../lib/type";
@@ -16,6 +17,7 @@ import {
   ErrorSavingBookAlertProps,
 } from "../Strings/strings";
 import { useAlertContext } from "../../context/useAlertContext";
+import { ConfirmModal } from "../Model/ConfirmationModel";
 
 export const ActionCell: React.FC<ActionCellProps> = ({
   rowData,
@@ -27,19 +29,19 @@ export const ActionCell: React.FC<ActionCellProps> = ({
 }) => {
   const { Cell } = Table;
   const { dispatch } = UseBookContext();
-
   const { SetAndDisplayAlert } = useAlertContext();
-  // Handles saving or updating a book
-  const onSave = async (tempId: number) => {
-    // read from local table state
-    const book = bookDataFromLocalState.find((b) => b.id === tempId)!;
 
-    // ── VALIDATION ─────────────────────────────────────────────────────
+  // State for delete confirmation
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
+
+  // Save handler (unchanged)
+  const onSave = async (tempId: number) => {
+    const book = bookDataFromLocalState.find((b) => b.id === tempId)!;
     const missing: string[] = [];
     if (!book.title?.trim()) missing.push("Title");
     if (!book.author?.trim()) missing.push("Author");
     if (!book.description?.trim()) missing.push("Description");
-
     if (missing.length) {
       SetAndDisplayAlert({
         severity: "error",
@@ -49,30 +51,20 @@ export const ActionCell: React.FC<ActionCellProps> = ({
           missing.length > 1 ? "are" : "is"
         } required.`,
       });
-
-      return; // abort save
+      return;
     }
-    // ────────────────────────────────────────────────────────────────────
-
-    // strip out internal fields
     const { id: _, status, createdAt, updatedAt, ...payload } = book as Book;
-
     try {
       let saved: Book;
       if (tempId < 0) {
-        // New book
         saved = await AddBookAsync(payload as BookPost);
         dispatch({ type: "AddBook", payload: saved });
-
         SetAndDisplayAlert(BookAddedAlertProps);
       } else {
-        // Existing book
         saved = await UpdateBookAsync(tempId, payload as BookPost);
         dispatch({ type: "EditBook", payload: { ...saved, status: null } });
         SetAndDisplayAlert(BookUpdatedAlertProps);
       }
-
-      // reflect saved result back into table and clear edit mode
       setBookDataFromLocalState((prev) =>
         prev.map((r) =>
           r.id === tempId ? { ...saved, status: null, isDirty: false } : r
@@ -85,13 +77,12 @@ export const ActionCell: React.FC<ActionCellProps> = ({
     }
   };
 
-  // Handles deletion of a book record
+  // Actual delete logic
   const onDelete = async (id: number) => {
     if (id < 0) {
       dispatch({ type: "DeleteBook", payload: { id } });
       setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
       onRemove(id);
-
       SetAndDisplayAlert(BookDeletedAlertProps);
       return;
     }
@@ -106,36 +97,53 @@ export const ActionCell: React.FC<ActionCellProps> = ({
     }
   };
 
+  // Open confirmation modal
+  const confirmDeletion = (id: number) => {
+    setPendingDeleteId(id);
+    setConfirmOpen(true);
+  };
+
+  // User confirmed deletion
+  const handleConfirm = () => {
+    if (pendingDeleteId != null) onDelete(pendingDeleteId);
+    setConfirmOpen(false);
+    setPendingDeleteId(null);
+  };
+
   return (
-    <Cell {...props} style={{ padding: 6, display: "flex", gap: 4 }}>
-      {rowData?.id != null && (
-        <>
-          {/* Save or Edit */}
-          <IconButton
-            appearance="subtle"
-            icon={rowData.status === "EDIT" ? <VscSave /> : <VscEdit />}
-            disabled={
-              rowData.status === "EDIT" &&
-              (!rowData.isDirty || // ← haven’t edited yet
-                !rowData.title?.trim() ||
-                !rowData.author?.trim() ||
-                !rowData.description?.trim())
-            }
-            onClick={async () => {
-              if (rowData.status === "EDIT") {
-                await onSave(rowData.id);
-              } else {
-                onEdit(rowData.id);
+    <>
+      <ConfirmModal
+        open={confirmOpen}
+        message="Are you sure you want to delete this record?"
+        onConfirm={handleConfirm}
+        onCancel={() => setConfirmOpen(false)}
+      />
+      <Cell {...props} style={{ padding: 6, display: "flex", gap: 4 }}>
+        {rowData?.id != null && (
+          <>
+            <IconButton
+              appearance="subtle"
+              icon={rowData.status === "EDIT" ? <VscSave /> : <VscEdit />}
+              disabled={
+                rowData.status === "EDIT" &&
+                (!rowData.isDirty ||
+                  !rowData.title?.trim() ||
+                  !rowData.author?.trim() ||
+                  !rowData.description?.trim())
               }
-            }}
-          />
-          <IconButton
-            appearance="subtle"
-            icon={<VscRemove />}
-            onClick={() => onDelete(rowData.id)}
-          />
-        </>
-      )}
-    </Cell>
+              onClick={async () => {
+                if (rowData.status === "EDIT") await onSave(rowData.id);
+                else onEdit!(rowData.id);
+              }}
+            />
+            <IconButton
+              appearance="subtle"
+              icon={<VscRemove />}
+              onClick={() => confirmDeletion(rowData.id)}
+            />
+          </>
+        )}
+      </Cell>
+    </>
   );
 };

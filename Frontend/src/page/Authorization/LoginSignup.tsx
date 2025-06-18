@@ -13,7 +13,7 @@ import { UseAuthContext } from "../../context/useAuthContext";
 import {
   UserLoggedInAlertProps,
   UserRegisteredAlertProps,
-} from "../Strings/strings";
+} from "../../component/Strings/strings";
 import styles from "./LoginSignup.module.css";
 
 type AuthAction = "Login" | "Sign Up";
@@ -61,8 +61,16 @@ const LoginSignup: React.FC = () => {
       login(response.token);
       SetAndDisplayAlert(UserLoggedInAlertProps);
 
-      navigate("/home");
+      navigate("/home", { replace: true });
     } catch (err: unknown) {
+      const errResponse = err as { response?: { data?: { detail?: string } } };
+      const detail = errResponse.response?.data?.detail;
+
+      if (detail) {
+        setAuthError(detail);
+        return;
+      }
+
       setAuthError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setLoading(false);
@@ -82,8 +90,16 @@ const LoginSignup: React.FC = () => {
       login(response.token);
       SetAndDisplayAlert(UserRegisteredAlertProps);
 
-      navigate("/home");
+      navigate("/home", { replace: true });
     } catch (err: unknown) {
+      const errResponse = err as { response?: { data?: { detail?: string } } };
+      const detail = errResponse.response?.data?.detail;
+
+      if (detail) {
+        setAuthError(detail);
+        return;
+      }
+
       setAuthError(err instanceof Error ? err.message : "Sign up failed");
     } finally {
       setLoading(false);

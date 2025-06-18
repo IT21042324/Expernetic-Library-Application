@@ -65,7 +65,7 @@ export const BookMassEditErrorAlertProps = {
 
 export const BookMassEditNeedChangesWarnAlertProps = {
   severity: "warning",
-  message: "Mass Edit needs changes to be be performed",
+  message: "Mass Edit needs any edits to be made for the selected records",
   color: "warning",
   isVisible: true,
 } as AlertProps;

@@ -1,9 +1,6 @@
 ﻿using LibraryApp.Dto;
 using LibraryApp.Dto.Responses;
-using LibraryApp.Model;
 using LibraryApp.Service;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Controllers

@@ -2,8 +2,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./page/Home/Home";
-import LoginSignup from "./component/Authorization/LoginSignup";
-import PrivateRoute from "./component/Authorization/PrivateRoute";
+import LoginSignup from "./page/Authorization/LoginSignup";
+import PrivateRoute from "./page/Authorization/PrivateRoute";
 import { AlertToast } from "./component/Alert/Alert";
 
 const App: React.FC = () => {

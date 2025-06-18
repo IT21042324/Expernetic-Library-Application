@@ -100,8 +100,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -112,8 +116,7 @@
               "RelativeToolTip": "LibraryApp\\Dto\\RegisterDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T12:10:05.69Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T12:10:05.69Z"
             },
             {
               "$type": "Document",
@@ -125,8 +128,7 @@
               "RelativeToolTip": "LibraryApp\\Exceptions\\NotFoundException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:34:28.431Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:34:28.431Z"
             },
             {
               "$type": "Document",
@@ -136,7 +138,7 @@
               "RelativeDocumentMoniker": "LibraryApp\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Controllers\\AuthController.cs",
               "RelativeToolTip": "LibraryApp\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-17T21:06:01.31Z",
               "EditorCaption": ""
@@ -151,8 +153,7 @@
               "RelativeToolTip": "LibraryApp\\Exceptions\\InvalidCredentialsException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:37:41.809Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:37:41.809Z"
             },
             {
               "$type": "Document",
@@ -164,8 +165,7 @@
               "RelativeToolTip": "LibraryApp\\Model\\Book.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T00:55:44.796Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T00:55:44.796Z"
             },
             {
               "$type": "Document",
@@ -177,8 +177,7 @@
               "RelativeToolTip": "LibraryApp\\Service\\UserService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAADwvwsAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:31:49.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:31:49.609Z"
             },
             {
               "$type": "Document",
@@ -190,8 +189,7 @@
               "RelativeToolTip": "LibraryApp\\Model\\User.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:04:24.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:04:24.14Z"
             },
             {
               "$type": "Document",
@@ -203,8 +201,7 @@
               "RelativeToolTip": "LibraryApp\\Controllers\\BooksController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T00:50:17.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T00:50:17.99Z"
             },
             {
               "$type": "Document",
@@ -216,8 +213,7 @@
               "RelativeToolTip": "LibraryApp\\ExceptionFilter\\GlobalExceptionFilter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T00:26:23.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T00:26:23.834Z"
             },
             {
               "$type": "Document",
@@ -229,8 +225,7 @@
               "RelativeToolTip": "LibraryApp\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T19:44:34.922Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T19:44:34.922Z"
             },
             {
               "$type": "Document",
@@ -242,8 +237,7 @@
               "RelativeToolTip": "LibraryApp\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-17T19:44:44.053Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T19:44:44.053Z"
             },
             {
               "$type": "Document",
@@ -255,8 +249,7 @@
               "RelativeToolTip": "LibraryApp\\Dto\\Responses\\UserResponse.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAIwA0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T22:29:19.407Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T22:29:19.407Z"
             },
             {
               "$type": "Document",
@@ -268,8 +261,7 @@
               "RelativeToolTip": "LibraryApp\\Exceptions\\UserAlreadyExistsException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:34:34.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:34:34.204Z"
             },
             {
               "$type": "Document",
@@ -281,25 +273,19 @@
               "RelativeToolTip": "LibraryApp\\Data\\LibraryDbContext.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAxwCoAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T21:12:22.315Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:12:22.315Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "LibraryApp",
+              "Title": "LibraryApp.csproj",
               "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
               "RelativeDocumentMoniker": "LibraryApp\\LibraryApp.csproj",
               "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
               "RelativeToolTip": "LibraryApp\\LibraryApp.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-17T20:50:01.26Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "WhenOpened": "2025-06-17T20:50:01.26Z"
             },
             {
               "$type": "Document",
@@ -311,8 +297,7 @@
               "RelativeToolTip": "LibraryApp\\Configuration\\JwtSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T20:46:38.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T20:46:38.339Z"
             },
             {
               "$type": "Document",
@@ -324,8 +309,7 @@
               "RelativeToolTip": "LibraryApp\\Service\\TokenService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T20:29:40.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T20:29:40.829Z"
             },
             {
               "$type": "Document",
@@ -337,8 +321,7 @@
               "RelativeToolTip": "LibraryApp\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-17T19:47:41.09Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T19:47:41.09Z"
             },
             {
               "$type": "Document",
@@ -350,8 +333,7 @@
               "RelativeToolTip": "LibraryApp\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-17T19:47:46.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T19:47:46.024Z"
             },
             {
               "$type": "Document",
@@ -363,8 +345,7 @@
               "RelativeToolTip": "LibraryApp\\LibraryApp.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-06-17T19:44:12.857Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T19:44:12.857Z"
             },
             {
               "$type": "Document",
@@ -376,8 +357,7 @@
               "RelativeToolTip": "LibraryApp\\Migrations\\20250614192715_initial.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T19:27:15.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-14T19:27:15.897Z"
             },
             {
               "$type": "Document",
