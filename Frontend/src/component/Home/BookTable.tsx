@@ -1,10 +1,7 @@
-// src/components/BookTable/BookTable.tsx
-
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Table } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import type {
-  AlertProps,
   Book,
   BookContextType,
   BookField,
@@ -17,15 +14,17 @@ import { ActionCell } from "./ActionCell";
 import { EditableCell } from "./EditableCell";
 import { ExpandCell } from "./ExpandCell";
 
+import { useAlertContext } from "../../context/useAlertContext";
 import { UseBookContext } from "../../context/useBookContext";
 import { BookToBookMassEditBookMapperArray } from "../../utils/helper";
-import { AlertToast } from "../Alert/Alert";
-import customStyles from "./BookTable.module.css";
 import {
   BookMassEditAlertProps,
   BookMassEditErrorAlertProps,
+  BookMassEditNeedChangesWarnAlertProps,
   BooksFetchedAlertProps,
+  SaveNewRecordsBeforeMassEditAlertProps,
 } from "../Strings/strings";
+import customStyles from "./BookTable.module.css";
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -47,13 +46,8 @@ export const BookTable: React.FC = () => {
   const [data, setData] = useState<Book[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
-  const [alertProps, setAlertProps] = useState<AlertProps>({
-    severity: "success",
-    message: "Book table loaded successfully!",
-    color: "success",
-    isVisible: false,
-  });
 
+  const { SetAndDisplayAlert } = useAlertContext();
   // Context provides master list and dispatch
   const { books, dispatch } = UseBookContext();
 
@@ -63,9 +57,11 @@ export const BookTable: React.FC = () => {
       const initialData = books.map((book) => ({
         ...book,
         status: selectedRowKeys.includes(book.id) ? "EDIT" : null,
+        isDirty: false, // ← new flag
       }));
       setData(initialData as Book[]);
-      setAlertProps({ ...BooksFetchedAlertProps });
+
+      SetAndDisplayAlert(BooksFetchedAlertProps);
     }
   }, [books]);
 
@@ -75,7 +71,11 @@ export const BookTable: React.FC = () => {
   const handleChange = (id: number, key: BookField, value: BookFieldType) => {
     // 1) Update local table state so blanks & edits stick
     setData((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, [key]: value } : item))
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, [key]: value, isDirty: true } // ← dirty now true
+          : item
+      )
     );
 
     // 2) (optional) keep context in sync
@@ -153,7 +153,7 @@ export const BookTable: React.FC = () => {
         (!row.title?.trim() || !row.author?.trim() || !row.description?.trim())
     );
     if (invalid.length) {
-      setAlertProps({
+      SetAndDisplayAlert({
         severity: "error",
         color: "error",
         isVisible: true,
@@ -161,6 +161,7 @@ export const BookTable: React.FC = () => {
           .map((r) => r.title)
           .join(", ")})`,
       });
+
       return;
     }
     // ────────────────────────────────────────────────────────────────────
@@ -169,12 +170,7 @@ export const BookTable: React.FC = () => {
     const toEdit = books.filter((b) => selectedRowKeys.includes(b.id));
     const unsaved = toEdit.filter((b) => b.id < 0);
     if (unsaved.length) {
-      setAlertProps({
-        severity: "warning",
-        message: "Please save new records before mass edit.",
-        color: "warning",
-        isVisible: true,
-      });
+      SetAndDisplayAlert(SaveNewRecordsBeforeMassEditAlertProps);
       return;
     }
 
@@ -188,18 +184,27 @@ export const BookTable: React.FC = () => {
           toEdit as BookContextType[]
         ) as BookPostMassEdit[]
       );
-      dispatch({ type: "MassEditBooks", payload: result as BookContextType[] });
-      setAlertProps({ ...BookMassEditAlertProps });
 
-      // Merge updated data back into table
-      setData((prev) =>
-        prev.map((row) => {
-          const updated = (result as Book[]).find((r) => r.id === row.id);
-          return updated ? { ...row, ...updated, status: null } : row;
-        })
-      );
+      if (result.length > 0) {
+        dispatch({
+          type: "MassEditBooks",
+          payload: result as BookContextType[],
+        });
+
+        SetAndDisplayAlert(BookMassEditAlertProps);
+
+        // Merge updated data back into table
+        setData((prev) =>
+          prev.map((row) => {
+            const updated = (result as Book[]).find((r) => r.id === row.id);
+            return updated ? { ...row, ...updated, status: null } : row;
+          })
+        );
+      } else {
+        SetAndDisplayAlert(BookMassEditNeedChangesWarnAlertProps);
+      }
     } catch {
-      setAlertProps({ ...BookMassEditErrorAlertProps });
+      SetAndDisplayAlert(BookMassEditErrorAlertProps);
     }
   };
 
@@ -239,7 +244,7 @@ export const BookTable: React.FC = () => {
         <Button
           onClick={() => {
             const newId = -Date.now();
-            const rec: Book = {
+            const rec: Book & { isDirty: boolean } = {
               id: newId,
               title: "",
               author: "",
@@ -247,6 +252,7 @@ export const BookTable: React.FC = () => {
               createdAt: new Date(),
               updatedAt: new Date(),
               status: "EDIT",
+              isDirty: false, // ← start out clean
             };
             dispatch({ type: "AddBook", payload: rec as BookContextType });
             setData((p) => [rec, ...p]);
@@ -352,13 +358,9 @@ export const BookTable: React.FC = () => {
             onRemove={handleRemove}
             bookDataFromLocalState={data}
             setBookDataFromLocalState={setData}
-            setAlertProps={setAlertProps}
           />
         </Column>
       </Table>
-
-      {/* Toast notifications */}
-      <AlertToast alertProps={alertProps} />
     </div>
   );
 };

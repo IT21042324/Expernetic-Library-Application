@@ -62,3 +62,38 @@ export const BookMassEditErrorAlertProps = {
   color: "error",
   isVisible: true,
 } as AlertProps;
+
+export const BookMassEditNeedChangesWarnAlertProps = {
+  severity: "warning",
+  message: "Mass Edit needs changes to be be performed",
+  color: "warning",
+  isVisible: true,
+} as AlertProps;
+
+export const UserLoggedInAlertProps = {
+  severity: "success",
+  message: "Logged In Successfully",
+  color: "success",
+  isVisible: true,
+} as AlertProps;
+
+export const UserRegisteredAlertProps = {
+  severity: "success",
+  message: "Registered Successfully",
+  color: "success",
+  isVisible: true,
+} as AlertProps;
+
+export const UserLoggedOutAlertProps = {
+  severity: "info",
+  message: "Logged Out Successfully",
+  color: "error",
+  isVisible: true,
+} as AlertProps;
+
+export const SaveNewRecordsBeforeMassEditAlertProps = {
+  severity: "warning",
+  message: "Please save new records before mass edit.",
+  color: "warning",
+  isVisible: true,
+} as AlertProps;

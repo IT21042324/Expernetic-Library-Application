@@ -1,9 +1,85 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\development\\expernetic library application\\backend\\libraryapp\\migrations\\20250614192715_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\controllers\\bookscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\controllers\\bookscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\model\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\model\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\exceptionfilter\\globalexceptionfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\exceptionfilter\\globalexceptionfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\dto\\responses\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\dto\\responses\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\exceptions\\invalidcredentialsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\exceptions\\invalidcredentialsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\exceptions\\useralreadyexistsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\exceptions\\useralreadyexistsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\service\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\service\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\data\\librarydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\data\\librarydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\libraryapp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\libraryapp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\configuration\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\configuration\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\libraryapp.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\libraryapp.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|c:\\users\\imree\\desktop\\expernetic-library-application\\backend\\libraryapp\\migrations\\20250614192715_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D9E5EEF-3F35-4F4F-8686-F319B12A3F6A}|LibraryApp\\LibraryApp.csproj|solutionrelative:libraryapp\\migrations\\20250614192715_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -20,44 +96,291 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Book.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Model\\Book.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Model\\Book.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Model\\Book.cs",
+              "RelativeToolTip": "LibraryApp\\Model\\Book.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T00:55:44.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InvalidCredentialsException.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\InvalidCredentialsException.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Exceptions\\InvalidCredentialsException.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\InvalidCredentialsException.cs",
+              "RelativeToolTip": "LibraryApp\\Exceptions\\InvalidCredentialsException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:37:41.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\NotFoundException.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Exceptions\\NotFoundException.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\NotFoundException.cs",
+              "RelativeToolTip": "LibraryApp\\Exceptions\\NotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:34:28.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Service\\UserService.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Service\\UserService.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Service\\UserService.cs",
+              "RelativeToolTip": "LibraryApp\\Service\\UserService.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAcwDgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:31:49.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Model\\User.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Model\\User.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Model\\User.cs",
+              "RelativeToolTip": "LibraryApp\\Model\\User.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:04:24.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "LibraryApp\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:06:01.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BooksController.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Controllers\\BooksController.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Controllers\\BooksController.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Controllers\\BooksController.cs",
+              "RelativeToolTip": "LibraryApp\\Controllers\\BooksController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T00:50:17.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GlobalExceptionFilter.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\ExceptionFilter\\GlobalExceptionFilter.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\ExceptionFilter\\GlobalExceptionFilter.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\ExceptionFilter\\GlobalExceptionFilter.cs",
+              "RelativeToolTip": "LibraryApp\\ExceptionFilter\\GlobalExceptionFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T00:26:23.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Program.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Program.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Program.cs",
+              "RelativeToolTip": "LibraryApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T19:44:34.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\appsettings.json",
+              "RelativeDocumentMoniker": "LibraryApp\\appsettings.json",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\appsettings.json",
+              "RelativeToolTip": "LibraryApp\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-17T19:44:44.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserResponse.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Dto\\Responses\\UserResponse.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Dto\\Responses\\UserResponse.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Dto\\Responses\\UserResponse.cs",
+              "RelativeToolTip": "LibraryApp\\Dto\\Responses\\UserResponse.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAIwA0AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T22:29:19.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UserAlreadyExistsException.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\UserAlreadyExistsException.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Exceptions\\UserAlreadyExistsException.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Exceptions\\UserAlreadyExistsException.cs",
+              "RelativeToolTip": "LibraryApp\\Exceptions\\UserAlreadyExistsException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:34:34.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LibraryDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Data\\LibraryDbContext.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Data\\LibraryDbContext.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Data\\LibraryDbContext.cs",
+              "RelativeToolTip": "LibraryApp\\Data\\LibraryDbContext.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwCoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T21:12:22.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LibraryApp",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
+              "RelativeDocumentMoniker": "LibraryApp\\LibraryApp.csproj",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.csproj",
+              "RelativeToolTip": "LibraryApp\\LibraryApp.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-06-17T20:50:01.26Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 15,
+              "Title": "JwtSettings.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Configuration\\JwtSettings.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Configuration\\JwtSettings.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Configuration\\JwtSettings.cs",
+              "RelativeToolTip": "LibraryApp\\Configuration\\JwtSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T20:46:38.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Service\\TokenService.cs",
+              "RelativeDocumentMoniker": "LibraryApp\\Service\\TokenService.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Service\\TokenService.cs",
+              "RelativeToolTip": "LibraryApp\\Service\\TokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T20:29:40.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "LibraryApp\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\appsettings.Development.json",
+              "RelativeToolTip": "LibraryApp\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-17T19:47:41.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "LibraryApp\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Properties\\launchSettings.json",
+              "RelativeToolTip": "LibraryApp\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-17T19:47:46.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "LibraryApp.http",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.http",
+              "RelativeDocumentMoniker": "LibraryApp\\LibraryApp.http",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\LibraryApp.http",
+              "RelativeToolTip": "LibraryApp\\LibraryApp.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-06-17T19:44:12.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "20250614192715_initial.cs",
-              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
               "RelativeDocumentMoniker": "LibraryApp\\Migrations\\20250614192715_initial.cs",
-              "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\Expernetic Library Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
+              "ToolTip": "C:\\Users\\imree\\Desktop\\Expernetic-Library-Application\\Backend\\LibraryApp\\Migrations\\20250614192715_initial.cs",
               "RelativeToolTip": "LibraryApp\\Migrations\\20250614192715_initial.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAoAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-14T19:27:15.897Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 20,
               "Title": "20250614171454_intialData.cs",
               "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
-              "RelativeDocumentMoniker": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "RelativeDocumentMoniker": "..\\..\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
               "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
-              "RelativeToolTip": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
+              "RelativeToolTip": "..\\..\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171454_intialData.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-14T17:14:54.811Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 21,
               "Title": "20250614171606_intialData.cs",
               "DocumentMoniker": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
-              "RelativeDocumentMoniker": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "RelativeDocumentMoniker": "..\\..\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
               "ToolTip": "C:\\Users\\imree\\Desktop\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
-              "RelativeToolTip": "..\\..\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
+              "RelativeToolTip": "..\\..\\Development\\LibraryApp\\LibraryApp\\Migrations\\20250614171606_intialData.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-14T17:16:06.321Z"
             }

@@ -15,6 +15,7 @@ import {
   BookUpdatedAlertProps,
   ErrorSavingBookAlertProps,
 } from "../Strings/strings";
+import { useAlertContext } from "../../context/useAlertContext";
 
 export const ActionCell: React.FC<ActionCellProps> = ({
   rowData,
@@ -22,12 +23,12 @@ export const ActionCell: React.FC<ActionCellProps> = ({
   onRemove,
   bookDataFromLocalState,
   setBookDataFromLocalState,
-  setAlertProps,
   ...props
 }) => {
   const { Cell } = Table;
   const { dispatch } = UseBookContext();
 
+  const { SetAndDisplayAlert } = useAlertContext();
   // Handles saving or updating a book
   const onSave = async (tempId: number) => {
     // read from local table state
@@ -40,7 +41,7 @@ export const ActionCell: React.FC<ActionCellProps> = ({
     if (!book.description?.trim()) missing.push("Description");
 
     if (missing.length) {
-      setAlertProps({
+      SetAndDisplayAlert({
         severity: "error",
         color: "error",
         isVisible: true,
@@ -48,6 +49,7 @@ export const ActionCell: React.FC<ActionCellProps> = ({
           missing.length > 1 ? "are" : "is"
         } required.`,
       });
+
       return; // abort save
     }
     // ────────────────────────────────────────────────────────────────────
@@ -61,23 +63,24 @@ export const ActionCell: React.FC<ActionCellProps> = ({
         // New book
         saved = await AddBookAsync(payload as BookPost);
         dispatch({ type: "AddBook", payload: saved });
-        setAlertProps({ ...BookAddedAlertProps });
+
+        SetAndDisplayAlert(BookAddedAlertProps);
       } else {
         // Existing book
         saved = await UpdateBookAsync(tempId, payload as BookPost);
         dispatch({ type: "EditBook", payload: { ...saved, status: null } });
-        setAlertProps({ ...BookUpdatedAlertProps });
+        SetAndDisplayAlert(BookUpdatedAlertProps);
       }
 
       // reflect saved result back into table and clear edit mode
       setBookDataFromLocalState((prev) =>
-        prev.map((r) => (r.id === tempId ? { ...saved, status: null } : r))
+        prev.map((r) =>
+          r.id === tempId ? { ...saved, status: null, isDirty: false } : r
+        )
       );
     } catch {
-      setAlertProps(
-        tempId < 0
-          ? { ...ErrorSavingBookAlertProps }
-          : { ...BookNotFoundAlertProps }
+      SetAndDisplayAlert(
+        tempId < 0 ? ErrorSavingBookAlertProps : BookNotFoundAlertProps
       );
     }
   };
@@ -88,7 +91,8 @@ export const ActionCell: React.FC<ActionCellProps> = ({
       dispatch({ type: "DeleteBook", payload: { id } });
       setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
       onRemove(id);
-      setAlertProps({ ...BookDeletedAlertProps });
+
+      SetAndDisplayAlert(BookDeletedAlertProps);
       return;
     }
     try {
@@ -96,9 +100,9 @@ export const ActionCell: React.FC<ActionCellProps> = ({
       dispatch({ type: "DeleteBook", payload: { id } });
       setBookDataFromLocalState((p) => p.filter((r) => r.id !== id));
       onRemove(id);
-      setAlertProps({ ...BookDeletedAlertProps });
+      SetAndDisplayAlert(BookDeletedAlertProps);
     } catch {
-      setAlertProps({ ...BookNotFoundAlertProps });
+      SetAndDisplayAlert(BookNotFoundAlertProps);
     }
   };
 
@@ -112,7 +116,8 @@ export const ActionCell: React.FC<ActionCellProps> = ({
             icon={rowData.status === "EDIT" ? <VscSave /> : <VscEdit />}
             disabled={
               rowData.status === "EDIT" &&
-              (!rowData.title?.trim() ||
+              (!rowData.isDirty || // ← haven’t edited yet
+                !rowData.title?.trim() ||
                 !rowData.author?.trim() ||
                 !rowData.description?.trim())
             }

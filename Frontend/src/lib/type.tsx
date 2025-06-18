@@ -8,6 +8,7 @@ export type Book = {
   createdAt: Date;
   updatedAt: Date;
   status?: "EDIT" | "VIEW" | null;
+  isDirty?: boolean; // New field to track if the book has unsaved changes
 };
 
 export type BookPost = Omit<Book, "id" | "createdAt" | "updatedAt">;
@@ -44,7 +45,6 @@ export type ActionCellProps = {
   style?: React.CSSProperties;
   bookDataFromLocalState: BookContextType[];
   setBookDataFromLocalState: React.Dispatch<React.SetStateAction<Book[]>>;
-  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 };
 
 export type BookContextType = {
@@ -61,14 +61,15 @@ export type BookState = {
   books: BookContextType[];
 };
 
-// type ActionState = {
-//   type: string;
-//   payload: Book | Book[];
-// };
+export type AlertState = {
+  alert: AlertProps;
+};
 
 export type BookContextProviderProps = {
-  children: React.ReactNode;
+  children: React.JSX.Element;
 };
+
+export type AlertContextProviderProps = BookContextProviderProps;
 
 export type ActionState =
   | { type: "AddBook"; payload: BookContextType }
@@ -77,7 +78,18 @@ export type ActionState =
   | { type: "EditBook"; payload: BookContextType }
   | { type: "MassEditBooks"; payload: BookContextType[] };
 
+export type AlertActionState =
+  | {
+      type: "SetAndDisplayAlert";
+      payload: AlertProps;
+    }
+  | {
+      type: "ClearAlert";
+      payload?: AlertProps;
+    };
+
 export type AlertProps = {
+  id?: number;
   severity: "success" | "error" | "warning" | "info";
   message: string;
   color: "success" | "info" | "warning" | "error";
@@ -88,4 +100,11 @@ export type ExpandCellProps = {
   rowData?: Book;
   expandedRowKeys: number[];
   onChange: (rowData: Book) => void;
+};
+
+export type AuthContextType = {
+  token: string | null;
+  login: (token: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
 };

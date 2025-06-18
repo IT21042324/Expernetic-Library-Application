@@ -1,16 +1,30 @@
-import { CustomProvider } from "rsuite";
-import "./App.css";
+// src/App.tsx
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./page/Home/Home";
-import BookContextProvider from "./context/BookContext";
+import LoginSignup from "./component/Authorization/LoginSignup";
+import PrivateRoute from "./component/Authorization/PrivateRoute";
+import { AlertToast } from "./component/Alert/Alert";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <CustomProvider theme="dark">
-      <BookContextProvider>
-        <Home />
-      </BookContextProvider>
-    </CustomProvider>
+    <>
+      <BrowserRouter>
+        <AlertToast />
+        <Routes>
+          <Route path="/" element={<LoginSignup />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
-}
+};
 
 export default App;

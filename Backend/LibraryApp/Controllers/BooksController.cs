@@ -3,21 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using LibraryApp.Model;
 using LibraryApp.Service;
 using LibraryApp.Dto.Responses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryApp.Controllers
 {
     // API controller for managing book resources
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
-    public class BooksController : ControllerBase
+    public class BooksController(BookService bookService) : ControllerBase
     {
-        private readonly BookService _service;
-
-        // Inject BookService via constructor
-        public BooksController(BookService service)
-        {
-            _service = service;
-        }
+        private readonly BookService _service = bookService;
 
         // GET api/books
         // Returns all books in the library

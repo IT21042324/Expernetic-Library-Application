@@ -53,7 +53,7 @@ function reducer(state: BookState, action: ActionState): BookState {
       return {
         ...state,
         books: state.books.map((book) => {
-          const updatedBook = action.payload.find((buk) => buk.id === book.id);
+          const updatedBook = action.payload?.find((buk) => buk.id === book.id);
           if (updatedBook)
             return {
               ...book,

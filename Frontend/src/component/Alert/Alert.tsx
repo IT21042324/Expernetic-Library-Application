@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { Alert, Collapse, IconButton } from "@mui/material";
+import { useAlertContext } from "../../context/useAlertContext";
 import type { AlertProps } from "../../lib/type";
+import styles from "./alert.module.css";
 
-type AlertComponentProps = {
-  alertProps: AlertProps;
-  className?: string;
-};
+export const AlertToast = () => {
+  const { alert: alertBody, dispatch: AlertDispatch } = useAlertContext();
 
-export const AlertToast = ({ alertProps }: AlertComponentProps) => {
   const [open, setOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentSeverity, setCurrentSeverity] =
@@ -17,10 +16,10 @@ export const AlertToast = ({ alertProps }: AlertComponentProps) => {
     useState<AlertProps["color"]>("success");
 
   useEffect(() => {
-    if (alertProps.isVisible) {
-      setCurrentMessage(alertProps.message);
-      setCurrentSeverity(alertProps.severity);
-      setCurrentColor(alertProps.color);
+    if (alertBody.isVisible) {
+      setCurrentMessage(alertBody.message);
+      setCurrentSeverity(alertBody.severity);
+      setCurrentColor(alertBody.color);
       setOpen(true); // Open the alert
 
       const timer = setTimeout(() => {
@@ -33,16 +32,14 @@ export const AlertToast = ({ alertProps }: AlertComponentProps) => {
     } else {
       setOpen(false);
     }
-  }, [alertProps]);
+  }, [alertBody]);
 
   if (!open) {
     return null;
   }
 
   return (
-    <div
-      style={{ position: "fixed", top: "20px", right: "20px", zIndex: 1000 }}
-    >
+    <div className={styles.alert}>
       <Collapse in={open}>
         <Alert
           severity={currentSeverity}
