@@ -35,7 +35,3 @@ The React app will open automatically in your browser
 ### 4. Create a user account
 
 After the frontend loads, register a new user via the UI. Logging in enables access to the library’s books and operations.
-
----
-
-Feel free to fork, explore, and extend the project as needed.
