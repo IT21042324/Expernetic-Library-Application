@@ -5,6 +5,7 @@
 
     position: sticky;
     top: 30px;
+    color: #838383;
 
 }
 
@@ -16,14 +17,46 @@
 .container .logoutIcon {
     position: absolute;
     right: 40px;
-    top: 0;
+    top: 17px;
     cursor: pointer;
-    font-size: 0.6em;
+    font-size: 0.8em;
     line-height: 1;
     padding: 3px;
 }
 
 .container .logoutIcon:hover {
-    color: #0f72be;
+    color: #1986da;
     background-color: transparent;
+}
+
+.container .heading {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 672px) {
+
+    .container {
+        font-size: 1.6rem;
+        line-height: 1.5em;
+        padding: 0 15px;
+    }
+
+    .container .logoutIcon {
+        position: absolute;
+        right: 20px;
+        top: 2px;
+        cursor: pointer;
+        font-size: 1em;
+        line-height: 1;
+        padding: 3px;
+    }
+
+
+
+    .container .heading {
+        text-align: left;
+    }
+
+
 }

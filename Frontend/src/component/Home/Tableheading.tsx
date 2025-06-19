@@ -15,7 +15,7 @@ export const TableHeading = () => {
 
   return (
     <div className={styles.container}>
-      <div>Library Book List</div>
+      <div className={styles.heading}>Library Book List</div>
       <div className={styles.logoutIcon}>
         <ExitIcon onClick={handleLogoutClick} />
       </div>
